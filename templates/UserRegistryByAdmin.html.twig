@@ -1,0 +1,114 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <header class="sticky">
+        page: admin_userregistry
+        Сообщение: {{error}}
+    </header>
+    <form id="uploadUserRegistryForm" method="post" action="{{ path('admin_userregistry') }}"><!--data-bind="submit: doSubmitUserRegistryForm"-->
+        <table data-bind="with: UserAdminNew">
+            <tr><td>Имя</td><td><input name="username" data-bind="textInput : UserName"/></td></tr>
+            <tr><td>Mail</td><td><input name="email" data-bind="textInput : Email"/></td></tr>
+            <tr><td>Пароль</td><td><input name="password" data-bind="textInput : Password"/></td></tr>
+            <tr><td>Роль</td><td>
+                <select name="role"
+                    data-bind="options : $root.RolesArr ,
+                        value: Role
+                        "/>
+                </td>
+            </tr>
+        </table>
+        </br>
+        <table class="scrollable">
+            <thead>
+                <tr>
+                    <th>Имя</th>
+                    <th>Email</th>
+                    <th>Роль</th>
+                    <th>Удалить</th>
+                    </td>                
+                </tr>            
+            </thead>            
+            <tbody data-bind="foreach: UserAdminArr">
+                <tr>
+                    <td>
+                        <div class="input-group fluid self-input-data">
+                            <input readonly data-bind="textInput : UserName"/>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group fluid self-input-data">
+                            <input readonly data-bind="textInput : Email"/>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group fluid self-input-data">
+                            <input readonly data-bind="textInput : Role"/>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group fluid self-input-data">
+                            <!--input data-bind="checked : _delete" type="checkbox"/-->
+                            <input data-bind="checked : _delete, attr: {'id': 'check' + $index()}" type="checkbox"/>
+                            <label data-bind="attr: {'for': 'check' + $index()}" class="switch"></label>                        
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>        
+        <textarea style="display:none;" name="datajson" data-bind="text: ko.toJSON(UserAdminArr , null, 0)"></textarea>
+        <!--pre data-bind="text: ko.toJSON(UserAdminArr , null, 2)"></pre-->
+        <input type="submit" value="Сохранить нового и изменить список"  id="sendUserRegistry"/>
+    </form>      
+        
+    
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        var loError='{{error|raw}}';
+        var loJson='{{json|raw}}';
+        
+        function UserAdminItem(data){
+            var self = this;
+            self.UserName = ko.observable(data.username?data.username:"");
+            self.Email = ko.observable(data.email?data.email:"");
+            self.Password = ko.observable(data.password?data.password:"");
+            self.Role = ko.observable(data.role?data.role:"ROLE_USER");
+            self._delete = ko.observable(data._delete?data._delete:false);
+        }
+        var UserRegistryByAdminViewModel = function(){
+            var self =this;
+            self.RolesArr = ko.observableArray( ['ROLE_ADMIN','ROLE_USER'] );
+            self.UserAdminNew = ko.observable(new UserAdminItem(''));
+            self.UserAdminArr = ko.observableArray();
+            
+            self.LoadInit = function(){
+                self.UserAdminArrUpdate();
+            };
+            
+            self.UserAdminArrUpdate = function(){
+                
+                json=JSON.parse(loJson);
+                self.UserAdminArr.removeAll();
+                for(var i=0;i<json.length;i++)
+                self.UserAdminArr.push(
+                        new UserAdminItem({
+                            username:json[i].username, email:json[i].email, role:json[i].roles
+                        }
+                    ));
+              
+            };
+            
+            /*self.doSubmitUserRegistryForm = function(formElement){
+                if( formElement.id==='uploadUserRegistryForm' ){
+                    
+                }
+            };*/
+            
+        };
+        var _UserRegistryByAdminViewModel = new UserRegistryByAdminViewModel();
+        ko.applyBindings(_UserRegistryByAdminViewModel);
+        _UserRegistryByAdminViewModel.LoadInit();
+    </script>
+{% endblock %}

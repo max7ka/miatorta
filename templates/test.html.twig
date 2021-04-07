@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="../js/bowser.js"></script>
+    </head>
+    <body>
+        
+<!--script type="text/javascript">
+    $(document).ready(function () {
+ 
+        var ua = navigator.userAgent;
+        var msie = false;
+        var ff = false;
+        var chrome = false;
+ 
+        //Javascript Browser Detection - Internet Explorer
+        if (/MSIE (\d+\.\d+);/.test(ua)) //test for MSIE x.x; True or False
+        {
+            var msie = (/MSIE (\d+\.\d+);/.test(ua)); //True or False
+            var ieversion = new Number(RegExp.$1); //gets browser version
+            alert("ie: " + msie + ' version:' + ieversion);
+        }
+ 
+        //Javascript Browser Detection - FireFox
+        if (/Firefox[\/\s](\d+\.\d+)/.test(navigator.ua))//test for Firefox/x.x or Firefox x.x
+        {
+            var ff = (/Firefox[\/\s](\d+\.\d+)/.test(navigator.ua)); //True or False
+            var ffversion = new Number(RegExp.$1) //gets browser version
+            alert("FF: " + ff + ' version:' + ieversion);
+        }
+ 
+        //Javascript Browser Detection - Chrome
+        if (ua.lastIndexOf('Chrome/') > 0) {
+            var version = ua.substr(ua.lastIndexOf('Chrome/') + 7, 2);
+            alert("chrome " + version);
+        }
+ 
+        //Javascript Browser Detection - Safari
+        if (ua.lastIndexOf('Safari/') > 0) {
+            var version = ua.substr(ua.lastIndexOf('Safari/') + 7, 2);
+            alert("Safari " + version);
+        }
+ 
+        //Javascript Browser Detection - Android
+        if (ua.indexOf("Android") >= 0) {
+            var androidversion = parseFloat(ua.slice(ua.indexOf("Android") + 8));
+            if (androidversion < 2.3) {
+                // do whatever
+                alert("This older version of Android has some issues with CSS");
+            }
+        }
+ 
+        //Javascript Browser Detection - Mobile
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(ua)) {
+ 
+            // Check if the orientation has changed 90 degrees or -90 degrees... or 0
+            window.addEventListener("orientationchange", function () {
+                alert(window.orientation);
+            });
+        }
+ 
+    });
+</script-->        
+        
+        
+        <div id="browsertest"></div>
+        <div id="browsertest2"></div>
+        
+        <script type="text/javascript">
+            
+        
+        if (bowser.msie /*&& bowser.version <= 6*/) {
+            alert('Hello IE');
+          } else if (bowser.firefox){
+            alert('Hello Foxy');
+          } else if (bowser.chrome){
+            alert('Hello Chrome');
+          } else if (bowser.safari){
+            alert('Hello Safari');
+          } else if(bowser.iphone || bowser.android){
+            alert('Hello mobile');
+          } else alert('Неизвестный');
+        
+        
+        jQuery.each( jQuery.browser, function( i, val ) {
+          $( "<div>(jQuery) " + i + " : <span>" + val + "</span>" )
+          .appendTo( document.body );
+        });
+
+
+        /*самое точное опредление браузера*/
+        var isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+        // Opera 8.0+ (UA detection to detect Blink/v8-powered Opera)
+        var isFirefox = typeof InstallTrigger !== 'undefined';   // Firefox 1.0+
+        var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
+        // At least Safari 3+: "[object HTMLElementConstructor]"
+        var isChrome = !!window.chrome && !isOpera;              // Chrome 1+
+        var isIE =/*@cc_on!@*/false || !!document.documentMode;
+        // Edge 20+
+        var isEdge = !isIE && !!window.StyleMedia;
+        // Chrome 1+
+        var output = '3 Detecting browsers by ducktyping:<hr>';
+        output += '3 isFirefox: ' + isFirefox + '<br>';
+        output += '3 isChrome: ' + isChrome + '<br>';
+        output += '3 isSafari: ' + isSafari + '<br>';
+        output += '3 isOpera: ' + isOpera + '<br>';
+        output += '3 isIE: ' + isIE + '<br>';
+        output += '3 isIE Edge: ' + isEdge + '<br>';
+        document.getElementById("browsertest2").innerHTML=output;
+        
+
+	var userAg = navigator.userAgent;
+		if (userAg.indexOf("Chrome") != -1) {
+			document.write("1 Google Chrome <br><br>");
+		} else if (userAg.indexOf("Firefox")!=-1) {
+			document.write("1 Mozilla Firefox <br><br>");
+		} else if (userAg.indexOf("Opera")!=-1) {
+			document.write("1 Opera <br>");
+		} else if (userAg.indexOf("MSIE")!=-1) {
+			document.write("1 Internet Explorer <br><br>");
+		} else if (userAg.indexOf("Safari")!=-1) {
+			document.write("1 Safari <br><br>");
+		} else {
+			document.write("unknown browser <br><br>");
+		}
+		document.write("1 Browser Version is :" + navigator.appVersion+ "<br><br>");
+		document.write("1 appName="+navigator.appName + "<br><br>");
+		document.write("1 appCodeName="+navigator.appCodeName + "<br><br>");
+		document.write("1 platform="+navigator.platform + "<br><br>");
+    
+        
+        
+        txt = "<p>2 Browser CodeName: " + navigator.appCodeName + "</p>";
+        txt+= "<p>2 Browser Name: " + navigator.appName + "</p>";
+        txt+= "<p>2 Browser Version: " + navigator.appVersion + "</p>";
+        txt+= "<p>2 Cookies Enabled: " + navigator.cookieEnabled + "</p>";
+        txt+= "<p>2 Platform: " + navigator.platform + "</p>";
+        txt+= "<p>2 User-agent header: " + navigator.userAgent + "</p>";
+        txt+= "<p>2 User-agent language: " + navigator.systemLanguage + "</p>";
+        document.getElementById("browsertest").innerHTML=txt;
+        
+        
+        
+        
+        
+        </script>        
+        <img src="sprite/300/2"/><br/>
+        <img src="sprite/300/3"/><br/>
+        <img src="sprite/300/4"/><br/>
+        <img src="sprite/300/5"/><br/>
+        <img src="sprite/300/7"/><br/>
+        <img src="sprite/300/14"/><br/>
+        <img src="sprite/300/16"/><br/>
+        <img src="sprite/300/17"/><br/>
+        <img src="sprite/300/18"/><br/>
+    </body>
+
+</html>

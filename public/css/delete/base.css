@@ -1,0 +1,463 @@
+
+/*+++STICKY*/
+/*.stickyheader {
+  padding: 10px 16px;
+  background: #555;
+  color: #f1f1f1;
+}
+.stickycontent {
+  padding: 16px;
+}
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%
+}
+.sticky + .stickycontent {
+  padding-top: 102px;
+} */
+/*---STICKY*/
+
+
+
+.self-input-data > input,
+.self-input-data > select,
+.self-input-data > textarea{
+    display: block !important;
+    border: 1px solid #EEE !important;
+    background: transparent !important;
+    padding: 0px !important;
+    margin: 0px !important;
+    width: 100% !important;
+}
+.self-datatable TD{
+    /*border: 1px solid #F00 !important;*/
+    padding: 0 !important;
+}
+.self-datatable TH{
+    /*border: 1px solid #F00 !important;*/
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.self-input-row{
+    /*border: 1px solid #AAA !important;
+    padding: 0px !important;
+    vertical-align: top !important;*/
+}
+/*.self-input-row > TD{
+    border: 1px solid #AAA !important;
+    padding-left: 0;
+    padding-right: 0;
+}*/
+.self-input-col{
+    /*border: 1px solid #AAA !important;*/
+    /*padding: .1rem;*/
+    /*margin: 0px !important;*/
+    /*vertical-align: top !important;*/
+}
+.self-input-row-table > TD{
+    /*padding: 0px !important;*/
+    /*margin: 0px !important;*/
+    vertical-align: top !important;
+}
+.self-input-header{
+    padding: 0px !important;
+}
+
+/*input,select,textarea{
+    border: 1px solid #DDD;
+}
+input,select{
+    width: 20em;
+}
+textarea{
+    width: 30em;
+}
+input[type="checkbox"] {
+    width: 5em;
+}
+input[type="button"] {
+    width: 10em;
+}
+
+
+TABLE {
+    border: 1px solid black;
+    border-bottom: none; 
+}
+TD, TH {
+    padding: 3px; 
+}
+TH {
+    text-align: left;
+    background: black;
+    color: white; 
+    border: 1px solid white;
+}
+TD {
+    border-bottom: 1px solid black;
+    vertical-align: top;
+}*/
+
+/*.image > .spriteanimate{
+    position: absolute;
+    background: #CCC;
+    opacity: 0;    
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+}*/
+.self-card{
+    background: yellow;
+    padding: 5px;
+    margin: 5px;
+    border: 4px solid greenyellow;
+    /*width: 99%;*/
+    /*height: 99%;*/
+}
+.self-card-image{
+    /*opacity: 0.8;*/
+}
+.self-card-context{
+    /*opacity: 0.8;*/
+    background: greenyellow;
+    padding: 20px;
+    
+    height: 200px;
+    overflow-y: hidden !important;    
+    
+    /*position: absolute;*/
+}
+.self-card-context p,
+.self-card-context h1,
+.self-card-context h2,
+.self-card-context h3,
+.self-card-context h4,
+.self-card-context h5,
+.self-card-context h6{
+    margin-bottom: 0px !important;
+}
+
+.spriteanimate{
+    /*background: red;*/
+    /*opacity: 0.5;*/
+    position: relative;
+}
+.spriteanimate .backimage{
+    width: 100%;
+}
+.spriteanimate > .spriteimage{
+    display: none;
+}
+.spriteanimate > canvas{
+    /*background: blueviolet;*/
+    width: 100%;
+    position: absolute;
+    top:0px;
+    left: 0px;
+    opacity: 0;
+}
+
+
+a {
+ color:#3794de
+}
+a:hover {
+ color:#f03c69
+}
+
+.self-nav{
+    background:#f8f8f8;
+    padding:24px 20px;
+    margin-bottom:24px
+}
+.self-nav li{
+    float: left;
+    margin-right: 30px;
+}
+.self-nav li a{
+    color: #000;
+    text-decoration: none;
+    display: block;
+}
+.self-nav li a:hover {
+    -moz-transition:all linear .2s;
+    transition:all linear .2s;
+    color:rgba(0,0,0,.6);
+    text-decoration:underline
+}
+.self-nav ul:after {
+ content:'';
+ display:table;
+ clear:both
+}
+.self-nav li {
+ float:left;
+ margin-right:20px
+}
+
+
+/*.spriteanimate{
+    background-color: #3f4e5e;
+    width: 200px;
+    height: 200px;
+}
+.spriteanimate > img{
+    display: none;
+}*/
+
+/*.self-sticky-header{
+    position: fixed;
+    z-index:2;
+}*/
+/*.self-sticky-tbody {
+    position:absolute;
+    z-index:1;
+}*/
+
+/*.self-sticky {*/
+    /*position: -webkit-sticky;
+    position: -moz-sticky;
+    position: -ms-sticky;
+    position: -o-sticky;
+    position: sticky;*/
+/*    top: 25px;*/
+    /*margin: 0px;
+    padding: 0px;*/
+/*    background: white;
+    width: 100%;*/
+    /*background: #F6D565;
+    padding: 25px 0;*/
+    /*text-transform: uppercase;*/
+/*    z-index: 10000;
+}*/
+
+
+
+/*TABLE TD{
+    border: 1px solid #F00 !important;
+    padding: 0 !important;
+}
+TABLE TH{
+    border: 1px solid #F00 !important;
+    padding: 0 !important;
+}*/
+
+
+/*.input-group [type="checkbox"] + */
+/*label:before{
+    background: red;
+}*/
+
+.self-input-data [type="checkbox"] + label.switch::before{
+	/*top: .5rem;
+	width: 1.75rem;
+	height: .875rem;
+	border: 0;
+	border-radius: .5rem;
+	background: #c9c9c9 !important;*/
+	margin-left: -1rem !important; /*-2.375rem*/
+}
+
+.self-input-data [type="checkbox"] + label.switch::after{
+	/*display: inline-block;
+	content: '';
+	position: absolute;
+	left: 0;
+	width: 1.25rem;
+	height: 1.25rem;
+	background: #e0e0e0;
+	border-radius: 100%;
+	top: .3125rem;*/
+	margin-left: -1.525rem !important;/*-3rem*/
+	/*transition: left 0.3s;*/
+}
+
+
+/* responsive menu +*/
+/*https://www.cssscript.com/pure-css-mobile-compatible-responsive-dropdown-menu/*/
+
+/*.self-header-with-submenu{
+    float: left !important;
+    width: 100% !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    height: auto !important;
+    padding: 0px !important;
+    margin: 0px !important;
+}*/
+
+/*body {
+  background: #212121;
+  font-size: 22px;*/
+  /*line-height: 32px;*/
+  /*color: #ffffff;*/
+  /*margin: 0;
+  padding: 0;*/
+  /*word-wrap: break-word !important;
+  font-family: 'roboto', sans-serif;
+}*/
+
+/*nav{
+    margin: 0px !important;
+    padding: 0px !important;
+    border: 0px !important;
+    background: transparent !important;
+}
+
+.self-toggle, [id^=drop] {
+    display: none;
+}
+
+nav {
+    margin: 0;
+    padding: 0;
+    background-color: black;
+}
+
+nav:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+nav ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  position: relative;
+  z-index: 2000;
+}
+
+nav ul li {
+  margin: 0px;
+  display: inline-block;
+  float: left;
+  background-color: #254441;
+}
+
+nav a {
+  display: block;
+  padding: 0 20px;
+  color: #FFF;
+  font-size: 20px;
+  line-height: 60px;
+  text-decoration: none;
+}
+
+nav ul li ul li:hover { background: #000000; }
+
+nav a:hover { background-color: #000000; }
+
+nav ul ul {
+  display: none;
+  position: absolute;
+  top: 60px;
+}
+
+nav ul li:hover > ul { display: inherit; }
+
+nav ul ul li {
+  width: 200px;
+  float: none;
+  display: list-item;
+  position: relative;
+}
+
+nav ul ul ul li {
+  position: relative;
+  top: -60px;
+  left: 200px;
+}
+
+li > a:after { content: ' +'; }
+li > a:only-child:after { content: ''; }*/
+
+
+/* Media Queries
+--------------------------------------------- */
+
+/*@media all and (max-width : 768px) {
+
+    #logo {
+      display: block;
+      padding: 0;
+      width: 100%;
+      text-align: center;
+      float: none;
+    }
+
+    nav { margin: 0; }
+
+    .self-toggle + a,
+     .menu { display: none; }
+
+    .self-toggle {
+      display: block;
+      background-color: #254441;
+      padding: 0 20px;
+      color: #FFF;
+      font-size: 20px;
+      line-height: 60px;
+      text-decoration: none;
+      border: none;
+    }
+
+    .self-toggle:hover { background-color: #000000; }
+
+    [id^=drop]:checked + ul { display: block; }
+
+    nav ul li {
+      display: block;
+      width: 100%;
+    }
+
+    nav ul ul .self-toggle,
+     nav ul ul a { padding: 0 40px; }
+
+    nav ul ul ul a { padding: 0 80px; }
+
+    nav a:hover,
+     nav ul ul ul a { background-color: #000000; }
+
+    nav ul li ul li .self-toggle,
+     nav ul ul a { background-color: #212121; }
+
+    nav ul ul {
+      float: none;
+      position: static;
+      color: #ffffff;
+    }
+
+    nav ul ul li:hover > ul,
+    nav ul li:hover > ul { display: none; }
+
+    nav ul ul li {
+      display: block;
+      width: 100%;
+    }
+
+    nav ul ul ul li { position: static;}
+}
+
+@media all and (max-width : 330px) {
+
+nav ul li {
+  display: block;
+  width: 94%;
+}
+
+}*/
+/* responsive menu -*/
+
+
+/*
+https://webcareer.ru/clearfix-na-css.html
+*/
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}

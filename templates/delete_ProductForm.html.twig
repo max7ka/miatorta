@@ -1,0 +1,433 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block body %}
+
+    page: admin_productform<br>
+    
+    продукция:<br>
+    
+<!--ko if: page() == 1-->   
+
+<!--https://codepen.io/appsoa/pen/ojyaaP-->
+<!--https://www.w3schools.com/howto/howto_js_sticky_header.asp-->
+
+<div class="stickyheader">
+    <div class="ui grid" id="stickyHeader">
+        <div class="one wide column">ID</div>
+        <div class="two wide column">Название</div>
+        <div class="six wide column">Описание</div>
+        <div class="two wide column">Url</div>
+        <div class="two wide column">Тип</div>
+        <div class="one wide column">Фото</div>
+        <div class="one wide column">Удалить</div>
+        <div class="one wide column">Открыть</div>
+    </div>
+</div>
+
+<div class="stickycontent">
+    <table id="product-data-table" 
+           class="ui unstackable orange compact selectable striped celled table" 
+           style="width:100% !important;" >
+        <thead>
+            <tr><th>
+
+            </th></tr>            
+        </thead>
+        <tbody data-bind="foreach: ProdArr">
+            <tr><td>
+                
+                <div class="ui form">
+                    <div class="fields">
+                        <div class="one wide field" data-bind="text : ProdId" align="center"></div>
+                        <div class="two wide field"><input type="text" data-bind="textInput : ProdName"/></div>
+                        <div class="six wide field"><textarea rows=3 data-bind="textinput : ProdDescription"></textarea></div>
+                        <div class="two wide field"><input data-bind="textInput : ProdUrl"/></div>
+                        <div class="two wide field">
+                            <select 
+                                data-bind="options : $root.ProdTypeArr,
+                                optionsCaption: 'Выбрать тип',
+                                optionsText: 'TypeName',
+                                optionsValue: function(item) {return item.TypeId;},
+                                value: ProdTypeId
+                                "></select>
+                        </div>
+                        <div class="one wide field" data-bind="text : ImageCount" align="center"></div>
+                        <div class="one wide field"><input data-bind="checked : _delete" type="checkbox"/></div>
+                        <div class="one wide field">
+                            <input type="button" id="openProdButton" value="открыть" data-bind='click: $root.Click_openProd.bind($data,$index())'/>
+                        </div>
+                    </div>
+                </div>
+            
+            </td></tr>
+        </tbody>
+        
+    </table>
+    
+    <input type="button" id="addProdButton" value="Добавить" data-bind='click: Click_addProd'/>
+    <input type="button" id="saveProdeButton" value="Сохранить" data-bind='click: Click_saveProd'/>
+    <input type="button" id="uploadProdButton" value="Перегрузить" data-bind='click: Click_uploadProd'/>
+    
+</div>
+<!--/ko-->
+<!--ko if: page() == 2-->
+    <input type="button" id="backToListButton" value="Вернуться к списку" data-bind='click: Click_backToList'/>
+    
+    <table data-bind="with: EditableProdItem">
+        <tr>
+            <td>Id</td> <td data-bind="text : ProdId"></td>
+        </tr><tr>
+            <td>Название</td> <td><input data-bind="textInput : ProdName"/></td>
+        </tr><tr>
+            <td>Описание</td> <td><textarea rows=15 data-bind="textinput : ProdDescription"></textarea></td>
+        </tr><tr>
+            <td>Url</td> <td><input data-bind="textInput : ProdUrl"/></td>
+        </tr><tr>
+            <td>Тип</td> <td>
+                    <input data-bind="textInput : ProdTypeId"/>
+                    <select 
+                        data-bind="options : $root.ProdTypeArr,
+                            optionsCaption: 'Выбрать тип',
+                            optionsText: 'TypeName',
+                            optionsValue: function(item) {return item.TypeId;},
+                            value: ProdTypeId
+                            "/> 
+                </td>
+        </tr><tr>
+            <td>Удалить</td> <td><input data-bind="checked : _delete" type="checkbox"/></td>
+        </tr><tr>
+            <td>Фото</td> 
+            <td>
+
+                <table>
+                    <tbody data-bind="foreach: $root.ImageArr_Ready">
+                        <tr>
+                            <td data-bind="text : ImageId"></td> 
+                            <td data-bind="text : ImageName"></td>
+                            <td data-bind="text : ImageDescription"></td>
+                            <!--td data-bind="text : PathSquareMini"></td-->
+                            <td><img data-bind="attr:{src: PathSquareMini}"/></td><!-- width="16px" height="16px" -->
+                        </tr>
+                    </tbody>
+                </table>  
+
+                <br/>
+                <input type="button" id="addImageButton" value="Добавить ещё фото" data-bind='click: $root.Click_addImage'/>
+                <form id="uploadImageForm" method="post" enctype="multipart/form-data" data-bind="submit: $root.doSubmitSendImages">
+                    <div data-bind="with: $root.EditableProdItem">
+                        <input type="hidden" name="prodid" data-bind="textInput : ProdId"/>
+                    </div>
+                    <input type="hidden" name="imagecount" data-bind='value: $root.NewImageCount'/>
+                    <table>
+                        <tbody data-bind="foreach: $root.ImageArr_New">
+                            <tr>
+                                <td>
+                                    <input data-bind="attr: {name : ImageName,value : ImageName}" type="file"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <input type="submit" value="Отравить"  id="sendImageButton"/>
+                </form>  
+                
+            </td>
+        </tr>
+    </table>
+    <input type="button" id="backToListButton" value="Вернуться к списку" data-bind='click: Click_backToList'/>
+    
+<!--/ko-->
+
+{% endblock %}
+
+{% block javascripts %}
+    
+    <!--script type="text/javascript" src="https://cdn.datatables.net/v/se/dt-1.10.16/datatables.min.js"></script-->
+    
+    <!--script src="/js/semantic.editableRecord.js"></script-->
+    
+    <script>
+
+        window.onscroll = function() {myFunction();};
+        var header = document.getElementById("stickyHeader");
+        var sticky = header.offsetTop;
+        function myFunction() {
+            console.log("sticky="+sticky);
+            console.log("window.pageYOffset="+window.pageYOffset);
+            if (window.pageYOffset >= sticky) {
+                header.classList.add("sticky");
+            } else {
+                header.classList.remove("sticky");
+            }
+        }
+    
+        /*$('.ui.sticky')
+            .sticky()
+        ;*/
+
+    /*$( document ).ready(function() {
+        $("#product-data-table").editableRecord();
+    });    */
+    
+    //$("product-data-table").da
+        
+    /*
+    https://www.w3schools.com/php/php_file_upload.asp
+    https://developer.mozilla.org/ru/docs/Web/HTML/Element/Input/image
+    http://phppot.com/jquery/jquery-ajax-image-upload/
+    http://phppot.com/jquery/jquery-ajax-image-upload/
+    https://stackoverflow.com/questions/19447435/ajax-upload-image
+    
+    http://blog.craigtp.co.uk/post/knockoutjs-binding-on-select-elements-in-a-foreach-loop
+    http://www.softfinity.com/blog/using-ajax-with-knockout-js-and-asp-net-mvc-4-to-load-select-drop-down-options/
+    */
+   
+    function ProdItem(data){
+        var self = this;
+        self.ProdId = ko.observable(data.prodid);
+        self.ProdName = ko.observable(data.prodname?data.prodname:"");
+        self.ProdDescription = ko.observable(data.proddescription?data.proddescription:"");
+        self.ProdUrl = ko.observable(data.produrl?data.produrl:"");
+        self.ProdTypeId = ko.observable(data.prodtypeid?data.prodtypeid:0);
+        self._delete = ko.observable(data._delete?data._delete:false);
+        self.ImageCount = data.imagecount?data.imagecount:0;
+    }
+    function ProdTypeItem (data){
+        var self = this;
+        self.TypeId = data.typeid;
+        self.TypeName = data.typename?data.typename:"";
+    };
+    function ProdImageItem(data){
+        var self = this;
+        self.ImageId = data.imageid;
+        self.ImageName = ko.observable(data.imagename?data.imagename:"");
+        self.ImageDescription = ko.observable(data.description?data.description:"");
+        self._delete = ko.observable(data._delete?data._delete:false);
+        
+        self.PathSquareMini = ko.computed(  
+                    function(){return '/productimage/square-mini/'+self.ImageName();},
+                    this
+                );
+    }
+    function ProdLoadImageItem(data){
+        var self = this;
+        self.ImageName = ko.observable(data.imagename?data.imagename:"");
+    }    
+    
+    var ProductFormViewModel = function(){
+            var self =this;
+            self.ProdArr = ko.observableArray();
+            self.ProdTypeArr = ko.observableArray();
+            
+            self.EditableProdItem = ko.observable();
+            self.EditableArrayPosition=0;
+            
+            self.pageTopOffset=0;
+            
+            self.page = ko.observable(1);
+            self.Click_backToList = function(){
+                self.page(1);
+                $(document).scrollTop(self.pageTopOffset);
+            };
+            
+            self.Click_openProd = function(arrnumber){
+                //alert(arrnumber);
+                self.pageTopOffset=window.pageYOffset;
+                self.EditableProdItem( self.ProdArr()[arrnumber] );
+                self.EditableArrayPosition=arrnumber;
+                self.ImageViewUpdate();
+                self.page(2);
+            };
+            
+            self.Click_addProd = function (){
+                self.ProdArr.push(
+                    new ProdItem({
+                        prodid:0
+                    })
+                );
+            };
+            
+            /*загрузка списка */
+            self.LoadUpdate = function(){
+                $.post("admin_producttypeload",{})
+                 .done(
+                    function(data) {
+                        ProdTypeArrUpdate(data);
+                        ////
+                        $.post("admin_productload",{})
+                         .done(
+                            function(data) {ProdArrUpdate(data);}
+                         );
+                    }
+                 ); 
+            };
+            
+            self.Click_saveProd = function(){
+                //alert(ko.toJSON(self.ProdArr));
+                $.post("admin_productsave",{datajson: ko.toJSON(self.ProdArr)})
+                 .done(
+                    function(data) {
+                        ProdArrUpdate(data);
+                    }
+                 );
+            };
+            
+            function ProdTypeArrUpdate(data){
+                json=JSON.parse(data);
+                self.ProdTypeArr.removeAll();
+                //self.ProdTypeArr.push( new ProdTypeItem({typeid:0,typename:""}) );
+                for(var i=0;i<json.length;i++)
+                self.ProdTypeArr.push(
+                        new ProdTypeItem({
+                            typeid:json[i].p_Id, typename:json[i].p_Name
+                        }
+                    ));
+            }
+            function ProdArrUpdate(data){
+                json=JSON.parse(data);
+                self.ProdArr.removeAll();
+                for(var i=0;i<json.length;i++)
+                self.ProdArr.push(
+                        new ProdItem({
+                            prodid:json[i].p_Id, 
+                            prodname:json[i].p_Name, 
+                            proddescription:json[i].p_Description,
+                            produrl:json[i].p_Url,
+                            prodtypeid:json[i].tk_Id,
+                            imagecount:json[i].imagecount
+                        }
+                    ));                
+            }
+
+            self.Click_uploadProd = function(){
+                self.LoadUpdate();
+            };
+            
+            
+            //** FOTOS **//
+            self.NewImageCount = ko.observable(0);
+            self.ImageArr_Ready = ko.observableArray();//Уже загруженные
+            self.ImageArr_New = ko.observableArray();
+            
+            //обновление загруженных фото, инициализация загрузки
+            self.ImageViewUpdate = function(){
+                self.ImageArr_New.removeAll();
+                self.NewImageCount(0);
+                ImageArr_ReadyUpdate();
+            };
+            self.Click_addImage = function(){
+                self.NewImageCount( self.NewImageCount()+1 );
+                self.ImageArr_New.push(
+                            new ProdLoadImageItem({
+                                imagename: "image"+self.NewImageCount()
+                            }
+                        ));
+            };
+            //отправка изображений
+            self.doSubmitSendImages = function(formElement){
+                if( formElement.id==='uploadImageForm' ){
+                    $.ajax({
+                        url: "admin_productimagesave",
+                        method: "post",
+                        data: new FormData( formElement ),
+                        //beforeSend: function(){alert("befor");},
+                        contentType: false,
+                        processData: false,
+                        success: function(data){
+                            //alert("success data="+data);
+                            
+                            self.ImageArr_New.removeAll();
+                            self.NewImageCount(0);
+                            
+                            //alert( self.EditableArrayPosition );
+                            
+                            json=JSON.parse(data);
+                            //alert( self.ProdArr()[self.EditableArrayPosition].ProdId() );
+                            //alert( json[0].p_Id );
+                            self.ProdArr()[self.EditableArrayPosition].ProdId( json[0].p_Id );
+                            
+                            ImageArr_ReadyUpdate();
+                        }
+                    });
+                }
+            };
+            /*update in editable item*/
+            function ImageArr_ReadyUpdate(){
+                //alert('ImageArr_ReadyUpdate');
+                $prodid = self.EditableProdItem().ProdId();
+                //alert($prodid);
+                $.post("productimagebyid",{prodid:$prodid})
+                 .done(
+                    function(data) {
+                        //alert(data);
+                        json=JSON.parse(data);
+                        self.ImageArr_Ready.removeAll();
+                        for(var i=0;i<json.length;i++)
+                        self.ImageArr_Ready.push(
+                                new ProdImageItem({
+                                    imageid:json[i].p_Id, 
+                                    imagename:json[i].p_Name, 
+                                    imagedescription:json[i].p_Description
+                                }
+                            ));
+                    }
+                 );                
+            }            
+            
+        };
+        var _ProductFormViewModel = new ProductFormViewModel();
+        ko.applyBindings(_ProductFormViewModel);
+        _ProductFormViewModel.LoadUpdate();
+        
+        
+//************************************************************************************
+
+    /*function ImageItem(data) {
+        var self = this;
+        self.imagename = ko.observable(data.name);
+    }
+    
+    var ProductFormViewModel = function(){
+        
+        var self = this;
+        
+        self.ImageCount = ko.observable(0);
+        self.ImageArr = ko.observableArray();
+        
+        self.Click_addImageField = function(){
+          self.ImageCount(self.ImageCount()+1);
+          self.ImageArr.push( new ImageItem(  {name: "image"+self.ImageCount()} ) );
+        };
+        
+        self.GetInfo = function (ImageArrItem) {
+            //alert(ImageArrItem.imagename());
+            //console.log(ImageArrItem.imagename());
+            //console.log(self.ImageArr()[0].imagename());
+            //console.log(ko.toJSON(self.ImageArr));
+        };
+    };
+    ko.applyBindings(new ProductFormViewModel());*/
+        
+        
+        
+    /*$(document).ready(function (e){   
+        $("#uploadForm").on('submit',(function(e){
+            e.preventDefault();
+            alert("test2");
+            $.ajax({
+                        url: "admin_productsave",
+                        method: "post",
+                        data: new FormData(this),
+                        beforeSend: function(){alert("befor");},
+                        contentType: false,
+                        processData: false,
+                        success: function(data){
+                            alert("success data="+data);
+                        }
+                    })
+        }))
+    })*/
+    </script>
+{% endblock %}

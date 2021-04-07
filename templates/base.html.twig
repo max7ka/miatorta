@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    <meta charset="utf-8" />
+    <!--meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+        <!--meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" /-->
+
+        <!--meta http-equiv="cache-control" content="max-age=0" />
+        <meta http-equiv="cache-control" content="no-cache" />
+        <meta http-equiv="expires" content="0" />
+        <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+        <meta http-equiv="pragma" content="no-cache" /-->
+        
+        <!--http://iamceege.github.io/tooltipster/-->
+    
+        {% block meta %}
+        {% endblock %}    
+        <title>{% block title %}Chokofetta{% endblock %}</title>
+        
+        <script type="text/javascript" src="/js/async.min.js"></script>
+        <script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="/js/knockout-3.4.2.js"></script>
+        <script type="text/javascript" src="/js/path.min.js"></script>
+        <script type="text/javascript" src="/js/base.js"></script>
+        <!--script type="text/javascript" src="/js/kube.min.js"></script-->
+        <!--link href="/css/kube.min.css" rel="stylesheet"/-->
+        <!--link rel="stylesheet" href="https://cdn.rawgit.com/Chalarangelo/mini.css/v2.3.7/dist/mini-default.min.css"/-->
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <!--script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+        <link href="/css/open-iconic-bootstrap.css" rel="stylesheet">
+        <link href="/css/base.css" rel="stylesheet"/>                
+
+        
+        {% block stylesheets %}
+
+        {% endblock %}
+        
+
+    </head>
+    <body>
+       
+        {% block body %}
+            
+        <div class="bodybackground">
+            
+            <!--header style="height: 200px">
+
+                <a href="#" class="logo">MiaTorta</a>
+                
+                {% if app.user!=null %}
+                    Username: {{ app.user.username }}
+                {% endif %}
+                <span>|</span>
+                <a class="button" href="admin_productform">admin_productform</a>
+                <a class="button" href="admin_producttypeform">admin_producttypeform</a>
+                <a class="button" href="admin_userregistry">admin_userregistry</a>
+                <a class="button" href="productimage/full/690142226cacb34a1f5313b6e90b5934.jpeg">productimage</a>
+                <a class="button" href="sprite/200/2">sprite</a>
+
+                {% if app.user==null %}
+                    <a class="button" href="login">login</a>
+                {% endif %}
+                {% if app.user!=null %}
+                    <a class="button" href="logout">logout</a>
+                {% endif %}
+                
+            </header-->
+            
+            <!--header style="height: 200px"-->
+            
+<!-- https://www.jqueryscript.net/menu/Mobile-friendly-Multi-level-Dropdown-Menu-Plugin-jQuery-Stellarnav.html -->            
+            
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+    <div class="container">
+        <div class="row w-100">
+            
+            <div class="col-lg-2">
+        
+                <a class="navbar-brand" href="#">
+                    <img src="image/logo-main-long.png"/>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+            </div>
+            <!--div class="col-10"></div-->
+            <div class="offset-lg-8 col-lg-2">
+                
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav mr-auto">
+                    <!--li class="nav-item">
+                      <a class="nav-link" href="#">Home</a>
+                    </li-->
+                    {% if app.user==null %}
+                      <li class="nav-item">
+                            <div>
+                                <a class="nav-link" href="login">Вход <span class="oi oi-account-login"></span></a>
+                            </div>
+                      </li>
+                    {% endif %}
+                    {% if app.user!=null %}
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="" id="navbarAdmin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          {% if app.user!=null %}
+                              Вы: {{ app.user.username }}
+                          {% endif %}                      
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarAdmin">
+                          <a class="dropdown-item" href="logout">Выход</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="admin_productform">Редактор продукции</a>
+                          <a class="dropdown-item" href="admin_producttypeform">Типы продукции</a>
+                          <a class="dropdown-item" href="admin_userregistry">Регистрация нового пользователя</a>
+                          <a class="dropdown-item" href="admin_clearcash">Очистить кэш (обновить кэш изображений)</a>
+                          <a class="dropdown-item" href="productimage/full/e6f8a200d3309612006909d116aed60c.jpeg">Test productimage</a>
+                          <a class="dropdown-item" href="sprite/200/2">Test sprite</a>
+                          <a class="dropdown-item" href="test">Test sprite2</a>
+                          <a class="dropdown-item" href="spritetype/300/2">Test random type-sprite (F5 update)</a>
+                      </div>
+                    </li>
+                     {% endif %}
+                  </ul>
+                </div>
+                  
+            </div>
+          
+        </div>
+  </div>
+</nav>
+                  
+<!--carusel-->
+<div class="container self-product-carousel d-none d-lg-block">
+    <div id="ProductCarouselControls" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators" data-bind="foreach: ProdCarouselArr">
+            <li data-target="#ProductCarouselControls" data-bind="attr:{'data-slide-to':$index(), class: $index()==0?'active':''}"></li>
+        </ol>        
+        <div class="carousel-inner" data-bind="foreach: ProdCarouselArr">
+            <div class="carousel-item" data-bind="attr:{class: $index()==0?'carousel-item active':'carousel-item'}">
+                <img class="d-block w-100" data-bind="attr: {'src': SpriteUrl}"><!--,'alt':ProdName-->
+                <div class="carousel-caption d-none d-md-block">
+                    <div class="self-carousel-caption">
+                    <a data-bind="attr: {'href': BookmarProdUrl}">
+                        <h5 data-bind="text: ProdName"></h5>
+                        <p data-bind="text: ProdDescription"></p>
+                    </a>
+                    </div>
+                </div>              
+            </div>            
+        </div>   
+    <a class="carousel-control-prev" href="#ProductCarouselControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">предыдущий</span>
+    </a>
+    <a class="carousel-control-next" href="#ProductCarouselControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">следующий</span>
+    </a>        
+    </div>
+</div>
+
+<!--types-->    
+<!-- row-flex row-flex-wrap -->
+<div class="container self-type-list d-block d-lg-none d-xl-none" data-bind="foreach: ProdTypeArr">
+    <div class="prod-item cursor-pointer" data-bind="event:{mouseover:ItemEventMouseOver, click:ItemEventClick}">
+        <div class="self-type-caption-name" data-bind="text : TypeName"></div>
+        <div class="self-type-caption-description" data-bind="text : TypeDescription"></div>
+    </div>
+</div>
+<div class="container self-type-list d-none d-lg-block d-xl-block">
+    <!--a class="btn btn-secondary" data-bind="event:{click:CollapseButtonClick}" data-toggle="collapse" href="#collapseTypesProducts" role="button" aria-expanded="true" aria-controls="collapseTypesProducts">
+        ...
+    </a>    
+    <div class="collapse show" id="collapseTypesProducts"-->
+        <div class="row" data-bind="foreach: ProdTypeArr"><!--justify-content-center-->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                <!--a-->
+                <div class="prod-item cursor-pointer" data-bind="event:{mouseover:ItemEventMouseOver, click:ItemEventClick}">
+                    <div class="spriteanimate spriteanimate-type" style="opacity: 0.2" data-bind="attr: {'src-sprite': SpriteUrl,'id':SpriteId}"><!-- , event:{mouseover:ItemEvent,click:ItemEvent} -->
+                        <img class="backimage" src="image/logo-empty.png"/>
+                    </div>
+                    <!--div class="card-body"-->
+                    <div class="self-type-caption text-dark"><!--carousel-caption text-dark-->
+                        <div class="self-type-caption-name" data-bind="text : TypeName"></div>
+                        <div class="self-type-caption-description" data-bind="text : TypeDescription"></div>
+                    </div>
+                </div>            
+                <!--div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title" data-bind="text : TypeName"></h5>
+                        <p class="card-text" data-bind="text : TypeDescription"></p>
+                        <p class="card-text" data-bind="text : SpriteUrl"></p>
+                        <p class="card-text" data-bind="text : SpriteId"></p>
+                    </div>
+                </div-->
+                <!--/a-->
+            </div>
+        </div>
+    <!--/div-->
+</div>
+
+
+<div id="ScrollTo"></div>
+
+<!--pre data-bind="text: ko.toJSON($root.ProdTypeSelect , null, 2)"></pre-->
+
+
+<!--products-->    
+<!--div class="container-fluid"  row-flex row-flex-wrap -->
+<div class="container self-prod-list" id="ProductList">    
+    <div class="container blockquote text-center" data-bind="with: ProdTypeSelect">
+        <h6 data-bind="text: TypeName"></h6>
+    </div>    
+    <div class="row" data-bind="foreach: ProdArr">
+        <div class="col-sm-12 col-md-6 col-lg-3">
+            <div class="prod-item" data-bind="event:{mouseover:ItemEventMouseOver}">
+                <!-- data-bind="event:{mouseover:ItemEventMouseOver,click:ItemEventClick}" -->
+                <!--h5 class="card-header">HEADER</h5-->
+                <!-- , event:{mouseover:ItemEvent,click:ItemEvent} -->
+                <div class="spriteanimate spriteanimate-prod" data-bind="attr: {'src-sprite': SpriteUrl,'id':SpriteId}">
+                    <img class="backimage" src="image/logo-empty.png"/><!--data-bind="attr: {'src':FirstSpriteImage}"-->
+                </div>
+                <div class="prod-description">
+                    <div class="row">
+                        <div class="col-9">
+                            <h6 class="card-title" data-bind="text : ProdName"></h6>
+                            <!--p class="card-text" data-bind="text : ProdDescription"></p-->
+                        </div>
+                        <div class="col-3">
+                            <a class="btn btn-sm btn-outline-secondary oi oi-info" title="Детально" data-bind="attr: {'href':PodrobnoUrl}"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>   
+    </div>
+</div>
+    
+<!-- HTML-код модального окна -->
+<div id="productModalBox" class="modal fade" tabindex="-1" role="dialog" data-bind="with: ProdView">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Подробно</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          
+        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">  
+            <div class="carousel-inner" data-bind="foreach: $root.ProdViewImages">
+              <div class="carousel-item" data-bind="attr:{class: $index()==0?'carousel-item active':'carousel-item'}">
+                <img class="d-block w-100" data-bind="attr: {'src': Path,'alt':ImageDescription}">
+              </div>
+            </div>
+            <!-- Элементы управления -->
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Предыдущий</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Следующий</span>
+            </a>            
+        </div>
+        <span class="oi oi-double-quote-serif-left"></span>
+        <span class="font-weight-bold" data-bind="text: ProdName"> </span>
+        <span data-bind="text: ProdDescription"> </span>
+        <span class="oi oi-double-quote-serif-right"></span>
+        
+        <div class="container">
+            <div class="row">
+                <!--div class="text-center"-->
+                    <!--input type="range" class="custom-range" min="0" max="5" step="0.5" id="customRange3"-->
+                    <div class="col-2">
+                    <button type="button" class="btn btn-outline-primary" style="width:40px;height:40px" data-bind="event:{click:ClickMinusWeight}">
+                        <span class="oi oi-minus"></span>
+                    </button>
+                    </div>
+                    <span class="col-8 font-weight-bold" data-bind="text: ProductCurPriceWeightInfo"></span>
+                    <div class="col-2">
+                    <button type="button" class="btn btn-outline-success" style="width:40px;height:40px" data-bind="event:{click:ClickPlusWeight}">
+                        <span class="oi oi-plus"></span>
+                    </button>
+                    </div>
+                <!--/div-->
+            </div>
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        
+        <!--ko if: $root.Browser() == 1-->   
+        <!--Firefox-->
+        <a class="btn btn-warning" rel="sidebar" data-bind="attr:{'href':BookmarProdUrl, 'title':BookmarProdName}">
+            <span class="oi oi-star"></span>
+            Добавить в избранное
+        </a>
+        <!--/ko-->
+        <!--ko if: $root.Browser() > 1-->   
+        <a class="btn btn-warning" data-bind="event:{click:$root.addBookmark}">
+            <span class="oi oi-star"></span>
+            В избранное
+        </a>
+        <!--/ko-->        
+        
+          
+        <!--span data-bind="event:{click:$root.addBookmark}"-->  
+            <!--a class="btn btn-warning" class="btn btn-secondary" rel="sidebar" data-bind="attr:{'href':PodrobnoUrl}"-->
+            <!--a class="btn btn-warning" class="btn btn-secondary" rel_="sidebar" data-bind="event:{click:$root.addBookmark}"-->
+            <!--button type="button" class="btn btn-secondary" data-bind="click: function(){ $root.addBookmark($ProdView); }"-->
+            <!--a id="bookmarkme" href_="#" class="btn btn-warning" class="btn btn-secondary" rel_="sidebar" 
+                data-bind="attr:{ 'prod-url':BookmarProdUrl, 'prod-name':BookmarProdName }"
+               -->
+                <!--span class="oi oi-star"></span>
+                Добавить в избранное
+            </a-->
+        <!--/span-->
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            <span class="oi oi-x"></span>
+            Закрыть
+        </button>
+      </div>
+    </div>
+  </div>
+</div>  
+
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-6 footer-item">
+                <img src="image/logo-big.png"/>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="footer-item">
+                    Mail: choko@mail.ru
+                </div>
+                <div class="footer-item">
+                    Mail: choko@mail.ru
+                </div>
+                <div class="footer-item">
+                    Mail: choko@mail.ru
+                </div>
+                <div class="footer-item">
+                    Mail: choko@mail.ru
+                </div>
+            </div>            
+         
+        </div>
+    </div>
+</footer>
+
+    </div><!--bodybackground-->
+
+        {% endblock %}
+
+        {% block javascripts %}
+        <script type="text/javascript" src="/js/jcanvas.min.js"></script>
+        
+        <script type="text/javascript">
+            
+            SITE_TITLE="chokofette.com";
+            document.title=SITE_TITLE;
+            
+            $('#productModalBox').on('show.bs.modal', function (e) {
+                document.title = _ProductsViewModel.ProdView().BookmarProdName();
+            });   
+            $('#productModalBox').on('hide.bs.modal', function (e) {
+                //alert("show");
+                document.title = SITE_TITLE;
+            });             
+            
+// Добавить в Избранное
+/*function add_favorite(a) {
+  title=document.title;
+  url=document.location;
+  try { // Internet Explorer
+    window.external.AddFavorite(url, title);
+  }
+  catch (e) {
+    try { // Mozilla
+      window.sidebar.addPanel(title, url, "");
+    }
+    catch (e) { // Opera
+      if (typeof(opera)=="object") {
+        a.rel="sidebar";
+        a.title=title;
+        a.url=url;
+        return true;
+      }
+      else { // Unknown
+        alert('Нажмите Ctrl-D чтобы добавить страницу в закладки');
+      }
+    }
+  }
+  return false;
+} */           
+            
+            /*$(document).ready(function() {
+                
+              $("#bookmarkme").click(function() {
+                
+                var ProdName=$(this).attr('prod-name');
+                var ProdUrl=$(this).attr('prod-url');
+                console.log(ProdName+" "+ProdUrl);
+                
+                if (window.sidebar) { // Mozilla Firefox Bookmark
+                  window.sidebar.addPanel(location.href,document.title,"");
+                } else if(window.external) { // IE Favorite
+                  window.external.AddFavorite(location.href,document.title); }
+                else if(window.opera && window.print) { // Opera Hotlist
+                  this.title=document.title;
+                  return true;
+                }
+              });
+            });   */     
+    
+            /* load products */
+            function ProdItem(data){
+                var self = this;
+                
+                self.SpriteImageSize = data.spriteimagesize?data.spriteimagesize:200;//200;
+                self.SpriteImagesLimit = data.spriteimageslimit?data.spriteimageslimit:5;//5;
+                
+                self.ProdId = ko.observable(data.prodid);
+                self.ProdName = ko.observable(data.prodname?data.prodname:"");
+                self.ProdDescription = ko.observable(data.proddescription?data.proddescription:"");
+                self.ProdUrl = ko.observable(data.produrl?data.produrl:"");
+                self.ProdTypeName = ko.observable(data.prodtypename?data.prodtypename:"");
+                
+                self.ImageCount = data.imagecount?data.imagecount:0;
+                self.SpriteUrl = (
+                            self.ImageCount>0?
+                            ("sprite/"+self.SpriteImageSize+"/"+self.ProdId())+
+                                    (self.SpriteImagesLimit==0?"":"/"+self.SpriteImagesLimit)
+                            :
+                            "");
+                self.SpriteId = "sprite"+self.ProdId();
+
+                self.PodrobnoUrl = "#info/"+ (self.ProdUrl().length>0 ? self.ProdUrl() : self.ProdId() );
+                
+                self.BookmarProdUrl = ko.observable("http://127.0.0.1:8000/"+self.PodrobnoUrl);
+                self.BookmarProdName = ko.observable(SITE_TITLE+" "+self.ProdName());
+                
+                //self.FirstSpriteImage = self.ImageCount>0?"sprite/150/"+self.ProdId()+"/1":"image/logo-empty.png";
+                
+                self.ProductPricePerKilogram = ko.observable(data.prodPricePerKilogram?data.prodPricePerKilogram:0);
+                self.ProductMinWeight = ko.observable(data.prodMinWeight?data.prodMinWeight:0);
+                self.ProductMaxWeight = ko.observable(data.prodMaxWeight?data.prodMaxWeight:0);
+                self.ProductStepWeight = ko.observable(data.prodStepWeight?data.prodStepWeight:0);
+                self.ProductCurStep = ko.observable(0);
+                
+                self.ProductCurPriceWeightInfo = ko.observable("");
+                SetPriceWeightInfo();
+
+                /* https://stackoverflow.com/questions/9226792/knockoutjs-bind-mouseover-or-jquery */
+                this.ItemEventMouseOver = function() {
+                    spriteEvent( $("#"+self.SpriteId));
+                    //console.log( "ItemEventMouseOver ProdId="+self.ProdId());
+                };
+                /*this.ItemEventClick = function() {
+                    console.log("ItemEvent: "+self.ProdId());
+                    //sprite scroll
+                    spriteEvent( $("#"+self.SpriteId));
+                    //$("#productModalBox").modal('show');
+                };*/    
+                this.ClickMinusWeight = function(){
+                    var step = self.ProductCurStep()-1;
+                    var Weight = self.ProductMinWeight() + self.ProductStepWeight() * step;
+                    if (Weight >= self.ProductMinWeight()) self.ProductCurStep(step);
+                    SetPriceWeightInfo();
+                };
+                this.ClickPlusWeight = function(){
+                    var step = self.ProductCurStep()+1;
+                    var Weight = self.ProductMinWeight() + self.ProductStepWeight() * step;
+                    if (Weight <= self.ProductMaxWeight()) self.ProductCurStep(step);
+                    SetPriceWeightInfo();
+                };
+                function SetPriceWeightInfo(){
+                    var Weight = self.ProductMinWeight() + self.ProductStepWeight() * self.ProductCurStep();
+                    var Price = Weight * self.ProductPricePerKilogram();
+                    self.ProductCurPriceWeightInfo("Вес: "+parseFloat(Weight).toFixed(2)+", Цена: "+parseFloat(Price).toFixed(1)+" руб");
+                }
+            }
+            
+            function ProdImageItem(data){
+                var self = this;
+                //self.ImageId = data.imageid;
+                self.ImageName = ko.observable(data.imagename?data.imagename:"");
+                self.ImageDescription = ko.observable(data.description?data.description:"");
+
+                self.Path = ko.computed(  
+                            function(){return '/image/products/'+self.ImageName();},
+                            this
+                        );
+            }
+            
+            function ProdTypeItem(data){
+                var self = this;
+                self.TypeId = ko.observable(data.typeid);
+                self.TypeName = ko.observable(data.typename?data.typename:"");
+                self.TypeDescription = ko.observable(data.typedescription?data.typedescription:"");
+                
+                self.SpriteUrl = "spritetype/100/"+self.TypeId();
+                self.SpriteId = "spritetype"+self.TypeId(); 
+                this.ItemEventMouseOver = function() {
+                    spriteEvent( $("#"+self.SpriteId));
+                    //console.log( "ItemEventMouseOver TypeId="+self.TypeId());
+                };   
+                this.ItemEventClick = function() {
+                    //console.log( "ItemEventClick TypeId="+self.TypeId());
+                    //_ProductsViewModel.ProdTypeSelect(self.TypeId());
+                    _ProductsViewModel.SetProdTypeSelect(self.TypeId());
+                    _ProductsViewModel.LoadUpdate();
+                    
+                    $('html, body').animate({
+                        scrollTop: $("#ScrollTo").offset().top-30
+                    }, 1000);
+                    
+                    //$( window ).resize();
+                };                  
+            }
+            
+            var ProductsViewModel = function(){
+                
+                var self =this;
+                self.ProdArr = ko.observableArray();
+                self.ProdCarouselArr = ko.observableArray();
+                self.ProdTypeArr = ko.observableArray();
+                self.ProdView = ko.observable();
+                self.ProdViewImages = ko.observableArray();
+                
+                self.ProdTypeSelect = ko.observable();//если > 0 выбран тип
+                
+                //self.productModalBox_ClickClose = function(){
+                    //alert("productModalBox_ClickClose");
+                    //window.history.go(-1);
+                //};
+                this.SetProdTypeSelect = function(typeid){
+                    for(var i=0;i<self.ProdTypeArr().length;i++){
+                        if (self.ProdTypeArr()[i].TypeId()===typeid){
+                            self.ProdTypeSelect(self.ProdTypeArr()[i]);
+                            //console.log(self.ProdTypeArr()[i].TypeName());
+                            break;
+                        }
+                        //console.log(self.ProdTypeArr()[i].TypeName());
+                    }
+                };
+                
+                this.Browser = ko.computed(function() {
+                    var isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+                    // Opera 8.0+ (UA detection to detect Blink/v8-powered Opera)
+                    var isFirefox = typeof InstallTrigger !== 'undefined';   // Firefox 1.0+
+                    var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
+                    // At least Safari 3+: "[object HTMLElementConstructor]"
+                    var isChrome = !!window.chrome && !isOpera;              // Chrome 1+
+                    var isIE =/*@cc_on!@*/false || !!document.documentMode;
+                    // Edge 20+
+                    var isEdge = !isIE && !!window.StyleMedia;
+                    
+                    if (isFirefox) return 1;
+                    if (isChrome && !isEdge) return 2;
+                    if (isOpera) return 3;
+                    if (isSafari) return 4;
+                    if (isEdge) return 5;
+                    if (isIE) return 6;
+                    return 0;
+                    
+                }, this);
+                
+                /*this.CollapseButtonClick = function(){
+                    //alert("collaps");
+                    $( window ).resize();
+                };*/
+                
+                this.addBookmark = function(){
+                    //alert("addBookmark");
+                    //document.title = self.ProdView().BookmarProdName()+" "+Math.random(1000);
+                    alert('Чтобы добавить сайт в закладки, нажмите комбинацию клавишь Ctrl+D');
+                    //document.title("chokofetta.com");
+                    
+                    /*if (self.Browser()==5 || self.Browser()==6){
+                        //alert("ie");
+                        //window.external.AddFavorite("http://127.0.0.1:8000/","title");
+                        //window.sidebar.addPanel("title", "http://127.0.0.1:8000/", "");
+                        a = document.getElementsByTagName("body")[0];
+                        a.rel = "sidebar";  
+                        a.title = "title";  
+                        a.url = "http://127.0.0.1:8000/";  
+                        return true; 
+                    };*/
+                    
+                    //window.sidebar.addPanel("title", "url", "");
+                    //alert("addBookmark");
+                    //console.log(self.ProdView().PodrobnoUrl);
+                    //if (document.all) 
+                    //
+                    //window.external.addFavorite("chokofetta.com/"+self.ProdView().PodrobnoUrl, 'chokofetta.com '+self.ProdView().ProdName());
+                    //
+                    //window.external.addFavorite('http://htmlbook.ru', 'Сайт htmlbook.ru');
+                    
+                    //var ProdName=$(this).attr('prod-name');
+                    //var ProdUrl=$(this).attr('prod-url');
+                    //console.log(ProdName+" "+ProdUrl);
+
+                    /*if (window.sidebar) { // Mozilla Firefox Bookmark
+                      window.sidebar.addPanel(location.href,document.title,"");
+                    } else if(window.external) { // IE Favorite
+                      window.external.AddFavorite(location.href,document.title); }
+                    else if(window.opera && window.print) { // Opera Hotlist
+                      this.title=document.title;
+                      return true;
+                    } */                   
+                };
+                
+                //для модального окна
+                this.ViewProductInWindow = function(p) {
+                    //console.log( "CardEventMouseOver "+p.ProdId()+" "+p.ProdName()+" "+p.ProdDescription() );
+                    
+                    self.ProdView(null);
+                    self.ProdViewImages.removeAll();
+                    
+                    prodid = p;
+                    
+                    //anonymous_oneproductload
+                    $.post("anonymous_oneproductload",{prodid:prodid})
+                        .done(
+                            function(data){
+                                if (data.length>0){
+                                    json=JSON.parse(data);
+                                    p = new ProdItem({
+                                            prodid:json[0].p_Id, 
+                                            prodname:json[0].p_Name, 
+                                            proddescription:json[0].p_Description,
+                                            produrl:json[0].p_Url,
+                                            prodtypename:json[0].tk_Name,
+                                            imagecount:json[0].imagecount,
+                                            prodPricePerKilogram:   parseFloat(json[0].p_ProductPricePerKilogram),
+                                            prodMinWeight:          parseFloat(json[0].p_ProductMinWeight),
+                                            prodMaxWeight:          parseFloat(json[0].p_ProductMaxWeight),
+                                            prodStepWeight:         parseFloat(json[0].p_ProductStepWeight)
+                                        }
+                                    );
+                                    self.ProdView(p);
+                                    
+                                    /*Получить список картинок*/
+                                    $.post("productimagebyid",{prodid:p.ProdId()})
+                                     .done(
+                                        function(data) {
+                                            json=JSON.parse(data);
+                                            for(var i=0;i<json.length;i++)
+                                                self.ProdViewImages.push(
+                                                    new ProdImageItem({
+                                                        imageid:json[i].p_Id, 
+                                                        imagename:json[i].p_Name, 
+                                                        imagedescription:json[i].p_Description
+                                                    }
+                                                ));
+                                        }
+                                     );
+                                    
+                                    //показаь модальное окно
+                                    $("#productModalBox").modal('show');
+                                    
+                                }
+                            }
+                        );
+                    
+                    /*self.ProdView(p);
+                    $prodid=p.ProdId();*/
+                    
+                    /*Получить список картинок*/
+                    /*$.post("productimagebyid",{prodid:prodid})
+                     .done(
+                        function(data) {
+                            //alert(data);
+                            json=JSON.parse(data);
+                            self.ProdViewImages.removeAll();
+                            for(var i=0;i<json.length;i++)
+                                self.ProdViewImages.push(
+                                    new ProdImageItem({
+                                        imageid:json[i].p_Id, 
+                                        imagename:json[i].p_Name, 
+                                        imagedescription:json[i].p_Description
+                                    }
+                                ));
+                        }
+                     );*/
+         
+                };
+                
+                /*загрузка списка */
+                self.LoadUpdate = function(){
+                    if (self.ProdCarouselArr().length==0){//только при первой инициализации
+                        $.post("anonymous_productlimitimagesload",{imageslimit:3})
+                                .done(
+                                    function(data){
+                                        //console.log('anonymous_productlimitimagesload');
+                                        //console.log(data);
+                                        ProdArrForCarouselUpdate(data);
+                                    }
+                                );
+                    }
+                    
+                    if (self.ProdTypeArr().length<=1){
+                        $.post("anonymous_typesload",{})
+                            .done(
+                                function(data) {
+                                    ProdTypeArrUpdate(data);
+                                    //console.log(data);
+                                }
+                            );
+                    };
+                    var p = self.ProdTypeSelect();
+                    var typeid=0;
+                    if (!!p) typeid=p.TypeId();
+                    //console.log("this.ProdTypeSelect() "+typeid);
+                    $.post("anonymous_productload",{typeid:typeid})
+                        .done(
+                            function(data) {
+                                //alert(data);
+                                ProdArrUpdate(data);
+                                //console.log(data);
+                            }
+                        ); 
+                    //$( window ).resize();
+                };
+                
+                function ProdArrForCarouselUpdate(data){
+                    json=JSON.parse(data);
+                    self.ProdCarouselArr.removeAll();
+                    for(var i=0;i<json.length;i++)
+                    self.ProdCarouselArr.push(
+                            new ProdItem({
+                                spriteimagesize : 300,
+                                spriteimageslimit : 3,
+                                prodid:json[i].p_Id, 
+                                prodname:json[i].p_Name, 
+                                proddescription:json[i].p_Description,
+                                produrl:json[i].p_Url,
+                                prodtypename:json[i].tk_Name,
+                                imagecount:json[i].imagecount,
+                                prodPricePerKilogram:json[i].p_ProductPricePerKilogram,
+                                prodMinWeight:json[i].p_ProductMinWeight,
+                                prodMaxWeight:json[i].p_ProductMaxWeight,
+                                prodStepWeight:json[i].p_ProductStepWeight
+                            }
+                        ));                     
+                };
+                
+                function ProdArrUpdate(data){
+                    json=JSON.parse(data);
+                    self.ProdArr.removeAll();
+                    for(var i=0;i<json.length;i++)
+                    self.ProdArr.push(
+                            new ProdItem({
+                                prodid:json[i].p_Id, 
+                                prodname:json[i].p_Name, 
+                                proddescription:json[i].p_Description,
+                                produrl:json[i].p_Url,
+                                prodtypename:json[i].tk_Name,
+                                imagecount:json[i].imagecount,
+                                prodPricePerKilogram:json[i].p_ProductPricePerKilogram,
+                                prodMinWeight:json[i].p_ProductMinWeight,
+                                prodMaxWeight:json[i].p_ProductMaxWeight,
+                                prodStepWeight:json[i].p_ProductStepWeight
+                            }
+                        ));  
+                    //$( window ).resize();
+                    //update();
+                    setTimeout("UpdateSpriteByClass('.spriteanimate-prod')",10);
+                };
+                
+                function ProdTypeArrUpdate(data){
+                    json=JSON.parse(data);
+                    self.ProdTypeArr.removeAll();
+                    
+                    self.ProdTypeArr.push(
+                            new ProdTypeItem({
+                                typeid:0, 
+                                typename:"Все", 
+                                typedescription:"",
+                            }
+                        ));
+                    //!--- NOOO elf.ProdTypeSelect( self.ProdTypeArr()[0] );
+                    
+                    for(var i=0;i<json.length;i++)
+                    self.ProdTypeArr.push(
+                            new ProdTypeItem({
+                                typeid:json[i].p_Id, 
+                                typename:json[i].p_Name, 
+                                typedescription:json[i].p_Description,
+                            }
+                        ));  
+                    //$( window ).resize();
+                    //update();
+                    setTimeout("UpdateSpriteByClass('.spriteanimate-type')",10);
+                }
+                
+            };
+            var _ProductsViewModel = new ProductsViewModel();
+            ko.applyBindings(_ProductsViewModel);
+            _ProductsViewModel.LoadUpdate();
+            /* - loadproducts*/    
+            
+            /*PATH*/
+                //Path.map("#info/:id").to(function(){
+                Path.map("#info/:id").to(function(){
+
+                    _ProductsViewModel.ViewProductInWindow(this.params['id']);
+                    //$("#productModalBox").modal('show');
+                });
+
+                $('#productModalBox').on('hidden.bs.modal', function (e) {
+                    //location.hash="";
+                    //alert(window.history.length);
+                    if (window.history.length >= 3) window.history.go(-1); else location.hash="";
+                });
+
+                Path.listen();            
+            /*-PATH*/
+            
+            
+    
+            /*$( window ).resize(function() {
+                
+                $( ".spriteanimate" ).each(function(index) {
+                    //self = this;
+                    //console.log("time fun="+$(self).attr("src-sprite"));
+                    setTimeout(
+                            function (self){
+                                oneSpireInit(self);
+                                //console.log("load sprite");
+                                //var spritePath = $(self).attr("src-sprite");
+                                //console.log("time fun spritePath="+spritePath);
+                            }
+                    ,0//Math.random()*10
+                    ,this
+                    );
+                });
+            });
+            
+            function oneSpireInit(sprite){
+                    var spritePath = $(sprite).attr("src-sprite");
+                    var backImage=$(".backimage",sprite);
+                    //console.log(backImage.height()+" "+backImage.width());
+                    
+                    var testCanva = $("canvas",sprite);
+                    if (!testCanva.length){//canva do not add...
+                        
+                        //console.log("sprite "+spritePath);
+                        
+                        $('<img src="'+spritePath+'" class="spriteimage"/>').insertAfter(backImage);
+                        var img=$(".spriteimage",sprite);
+                        $(img).attr('spriteCount', 0);
+                        $(img).attr('spriteBusy', 'Off');
+                        $(img).attr('spriteNumber', 0);
+                        $(img).attr('spriteDuration', 'Right');
+                        $(img).attr('spriteOffset', 0);//0-0.1-1                        
+                        $(img).attr('spriteCount', 0);
+                        
+                        $('<canvas class="rounded"/>').insertAfter(img);//ui circular image
+                        
+                        var that=sprite;
+                        img.on("load",function(){
+                            var spriteCount=Math.round( $(this).width()/$(this).height() );
+                            $(this).attr('spriteCount', spriteCount);
+                            if (spriteCount>0){
+                                spriteCanvaResize(that);
+                                canvaDraw(that);
+                            }
+                            $("canvas",that).animate({ opacity:1 },1000);
+                            $(backImage).css('opacity', 0);
+                        });  
+                    }
+                    
+                    var spriteCount = $(".spriteimage",sprite).attr('spriteCount');
+                    if (spriteCount>0){
+                        spriteCanvaResize(sprite);
+                        canvaDraw(sprite);
+                    }
+            };*/
+            
+            
+            function UpdateSpriteByClass(ClassName){
+                $(ClassName).each(function(index) {
+                    
+                    //console.log("sprite update");
+                    
+                    var spritePath = $(this).attr("src-sprite");
+                    var backImage=$(".backimage",this);
+                    //console.log(backImage.height()+" "+backImage.width());
+                    
+                    var testSprite = $(".spriteimage",this);
+                    //console.log(typeof testSprite.length);
+                    if (testSprite.length==0){//.length
+                        
+                        //console.log("sprite testSprite");
+                        var that = this;
+                        setTimeout(
+                            function() { 
+                                $('<img src="'+spritePath+'" class="spriteimage"/>').insertAfter(backImage);
+                                var img=$(".spriteimage",that);
+                                $(img).attr('spriteCount', 0);
+                                $(img).attr('spriteBusy', 'Off');
+                                $(img).attr('spriteNumber', 0);
+                                $(img).attr('spriteDuration', 'Right');
+                                $(img).attr('spriteOffset', 0);//0-0.1-1                        
+                                $(img).attr('spriteCount', 0);    
+                                $('<canvas class="rounded"/>').insertAfter(img);//ui circular image
+                                img.on("load",function(){
+                                    var spriteCount=Math.round( $(this).width()/$(this).height() );
+                                    //console.log("WH = "+$(this).width()+" "+$(this).height());
+                                    if (spriteCount>0){
+                                        $(this).attr('spriteCount', spriteCount);
+                                        spriteCanvaResize(that);
+                                        canvaDraw(that);
+                                    }
+                                    $("canvas",that).animate({ opacity:1 },1000);
+                                    $(backImage).css('opacity', 0);
+                                });                                
+                            }, 10
+                        );
+                        
+                        /*$('<img src="'+spritePath+'" class="spriteimage"/>').insertAfter(backImage);
+                        var img=$(".spriteimage",this);
+                        $(img).attr('spriteCount', 0);
+                        $(img).attr('spriteBusy', 'Off');
+                        $(img).attr('spriteNumber', 0);
+                        $(img).attr('spriteDuration', 'Right');
+                        $(img).attr('spriteOffset', 0);//0-0.1-1                        
+                        $(img).attr('spriteCount', 0);
+                        
+                        $('<canvas class="rounded"/>').insertAfter(img);//ui circular image
+                        
+                        var that=this;
+                        img.on("load",function(){
+                            var spriteCount=Math.round( $(this).width()/$(this).height() );
+                            //console.log("WH = "+$(this).width()+" "+$(this).height());
+                            if (spriteCount>0){
+                                $(this).attr('spriteCount', spriteCount);
+                                spriteCanvaResize(that);
+                                canvaDraw(that);
+                            }
+                            $("canvas",that).animate({ opacity:1 },1000);
+                            $(backImage).css('opacity', 0);
+                        });*/
+                        
+                        /*--if ($(img).attr('spriteCount')==0){
+                            //console.log("spriteCount="+$(img).attr('spriteCount'));
+                            //console.log("WH = "+$(img).width()+" "+$(img).height());
+                            if ( $(img).width()>0 && $(img).height()>0 ){
+                                var spriteCount=Math.round( $(img).width()/$(img).height() );
+                                //console.log("WH = "+$(this).width()+" "+$(this).height());
+                                if (spriteCount>0){
+                                    //console.log("WH = "+$(img).width()+" "+$(img).height());
+                                    $(img).attr('spriteCount', spriteCount);
+                                    spriteCanvaResize(this);
+                                    canvaDraw(this);
+                                }
+                            }
+                        }--*/
+                    }
+                    var spriteCount = $(".spriteimage",this).attr('spriteCount');
+                    if (spriteCount>0){
+                        spriteCanvaResize(this);
+                        canvaDraw(this);
+                    }
+                });                   
+            };
+    
+    
+            $( window ).resize(function() {
+                setTimeout("UpdateSpriteByClass('.spriteanimate-prod')",10);
+                setTimeout("UpdateSpriteByClass('.spriteanimate-type')",20);
+            });  
+            
+            /*function update(){
+                //setTimeout("$( window ).resize()",1000);
+            }*/
+            
+            function spriteCanvaResize(sprite){
+                var canva=$("canvas",sprite);
+                var backImg=$(".backimage",sprite);//fix iexplorer
+                canva.height( $(backImg).height() );
+                canva.width( $(backImg).width() );
+            }
+            function canvaDraw(sprite){
+                var canva=$("canvas",sprite);
+                var img=$(".spriteimage",sprite);
+                var numImgSprite=img.attr('spriteNumber');
+                var offsetImgSprite=img.attr('spriteOffset');
+                var imgH=img[0].height;
+                var spriteH=$(sprite).height();
+                if (canva && numImgSprite && offsetImgSprite){
+                    offsetImgSprite=offsetImgSprite-numImgSprite;
+                    canva.drawImage({
+                        source: img[0],
+                        width: 300,height: 300/2,x: 0,y: 0,
+                        sWidth: imgH,sHeight: imgH,sx: imgH*offsetImgSprite+imgH*numImgSprite,sy: 0,
+                        fromCenter: false
+                    });
+                }
+            };
+            function spriteEvent(thes){
+                
+                //console.log(thes);
+                
+                var busySprite=$(".spriteimage",thes).attr('spriteBusy');
+                var spriteCount = $(".spriteimage",thes).attr('spriteCount');
+                
+                //console.log(busySprite);
+                if (busySprite=='Off' && spriteCount>1){
+                    $(".spriteimage",thes).attr('spriteBusy', 'On');
+                    var that=thes;
+                    var durationImgSprite=$(".spriteimage",thes).attr('spriteDuration');
+                    $(".spriteimage",thes).animate(
+                        {
+                            spriteOffset:durationImgSprite=="Right"?"+=1":"-=1"//,
+                        },
+                        {
+                            duration:1000,
+                            easing:"swing",//"linear",
+                            step:function(value, properties){
+                                if (properties.prop === "spriteOffset"){
+                                    $(this).attr(properties.prop, value);
+                                    canvaDraw(that);
+                                }
+                            },
+                            done:function(){
+                                var numImgSprite=$(this).attr('spriteNumber');
+                                var durationImgSprite=$(this).attr('spriteDuration');
+                                var spriteCount = $(this).attr('spriteCount');
+                                if (durationImgSprite=="Right"){
+                                    numImgSprite++;
+                                    if (numImgSprite==spriteCount-1){
+                                        $(this).attr('spriteDuration','Left');
+                                    }
+                                }
+                                else{
+                                    numImgSprite--;
+                                    if (numImgSprite==0){
+                                        $(this).attr('spriteDuration','Right');
+                                    }                            
+                                }
+                                $(this).attr('spriteNumber',numImgSprite);
+                                $(this).attr('spriteBusy', 'Off');
+                            }
+                        }
+                    );
+                };                
+            }
+            
+            $( ".spriteanimate" ).on( "mouseover", function() {
+                //console.log('mouseover');
+                spriteEvent(this);
+            });
+            $( ".spriteanimate" ).on( "click", function() {
+                //console.log('click');
+                spriteEvent(this);
+            });            
+            
+            $( document ).ready(function() {
+                //$( window ).resize();//перерисовка спрайтов
+            });
+            
+        </script>            
+            
+        {% endblock %}
+        
+    </body>
+    
+</html>

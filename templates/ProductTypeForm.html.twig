@@ -1,0 +1,137 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Виды продукции
+{% endblock %}
+
+{% block body %}
+    <header>
+        <h3>
+    page: admin_producttypeform
+    Виды продукции
+    </h3>
+    </header>
+    
+    <div class="container">
+
+    <table class="table table-hover self-datatable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Описание</th>
+                <th>Удалить</th>
+                </td>                
+            </tr>            
+        </thead>
+        <tbody data-bind="foreach: TypeArr">
+            <tr> 
+                <td data-bind="text : TypeId"></td>
+                <td>
+                    <div class="self-input-data">
+                        <input data-bind="textInput : TypeName"/>
+                    </div>
+                </td>
+                <td>
+                    <div class="self-input-data">
+                        <input data-bind="textInput : TypeDescription"/>
+                    </div>
+                </td>
+                <td>
+                    <div class="self-input-data">
+                        <input data-bind="checked : _delete, attr: {'id': 'check' + $index()}" type="checkbox"/>
+                        <label data-bind="attr: {'for': 'check' + $index()}" class="switch"></label>
+                    </div>
+                </td>                
+            </tr>
+        </tbody>
+    </table>  
+        <div class="btn-group">
+            <input class="btn" type="button" id="addTypeButton" value="Добавить" data-bind='click: Click_addType'/>
+            <input class="btn" type="button" id="saveTypeButton" value="Сохранить" data-bind='click: Click_saveType'/>
+            <input class="btn" type="button" id="uploadTypeButton" value="Перегрузить" data-bind='click: Click_uploadType'/>        
+        </div>
+    </div>
+        
+    <!--pre data-bind="text: ko.toJSON($root , null, 2)"></pre-->
+    <!--pre data-bind="text: ko.toJSON($root.TypeArr , null, 2)"></pre-->
+    <!--pre data-bind="text: ko.toJSON(TypeArr , null, 2)"></pre-->
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        
+    /*$( window ).resize(function() {
+        ResizeTableByContex("self-datatable-3");
+    });
+    $( document ).ready(function() {
+        ResizeTableByContex("self-datatable-3");
+    });        */
+        
+    function TypeItem(data){
+        var self = this;
+        self.TypeId = ko.observable(data.typeid);
+        self.TypeName = ko.observable(data.typename?data.typename:"");
+        self.TypeDescription = ko.observable(data.typedescription?data.typedescription:"");
+        self._delete = ko.observable(data._delete?data._delete:false);
+    }
+
+    var ProductTypeFormViewModel = function(){
+            var self =this;
+            self.TypeArr = ko.observableArray();
+            //self.TypeArr_LoadUpdate();
+            //self.test = ko.observable(123);
+            
+            self.Click_addType = function (){
+                //alert('add');
+                self.TypeArr.push(
+                    new TypeItem({
+                        typeid:0
+                    })
+                );
+            };
+            
+            /*загрузка списка */
+            self.LoadUpdate = function(){
+                $.post("admin_producttypeload",{})
+                 .done(
+                    function(data) {
+                        //alert(data);
+                        json=JSON.parse(data);
+                        self.TypeArr.removeAll();
+                        for(var i=0;i<json.length;i++)
+                        self.TypeArr.push(
+                                new TypeItem({
+                                    typeid:json[i].p_Id, typename:json[i].p_Name, typedescription:json[i].p_Description
+                                }
+                            ));
+                    }
+                 );
+            };
+            
+            self.Click_saveType = function(){
+                $.post("admin_producttypesave",{datajson: ko.toJSON(self.TypeArr)})
+                 .done(
+                    function(data) {
+                        json=JSON.parse(data);
+                        self.TypeArr.removeAll();
+                        for(var i=0;i<json.length;i++)
+                        self.TypeArr.push(
+                                new TypeItem({
+                                    typeid:json[i].p_Id, typename:json[i].p_Name, typedescription:json[i].p_Description
+                                }
+                            ));
+                    }
+                 );
+            };
+            
+            self.Click_uploadType = function(){
+                self.LoadUpdate();
+                //ResizeTableByContex("self-datatable-3");
+            };
+        };
+        var _ProductTypeFormViewModel = new ProductTypeFormViewModel();
+        ko.applyBindings(_ProductTypeFormViewModel);
+        _ProductTypeFormViewModel.LoadUpdate();
+    </script>
+{% endblock %}    

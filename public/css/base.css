@@ -1,0 +1,262 @@
+/* https://www.css-gradient.com/ */
+
+
+img.blur {
+ -webkit-filter: url(#blur);
+ filter: url(#blur);
+ -webkit-filter: blur(3px);
+ filter: blur(3px);
+ filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='3');
+ -webkit-transition: 1s -webkit-filter linear;
+ transition: 1s filter linear;
+}
+
+/*body{
+    background: #cfc8db;
+}*/
+.self-product-carousel{
+    /*padding-top: 5em;*/
+    margin-top: 5em;
+    padding:  1em;
+    -webkit-box-shadow: 0px 3px 4px 0px rgba(50, 50, 50, 0.55);
+    -moz-box-shadow:    0px 3px 4px 0px rgba(50, 50, 50, 0.55);
+    box-shadow:         0px 3px 4px 0px rgba(50, 50, 50, 0.55);  
+}
+.self-type-list{
+    /*padding-top: 5em;*/
+    margin-top: 5em;
+    padding:  1em;
+    -webkit-box-shadow: 0px 3px 4px 0px rgba(50, 50, 50, 0.55);
+    -moz-box-shadow:    0px 3px 4px 0px rgba(50, 50, 50, 0.55);
+    box-shadow:         0px 3px 4px 0px rgba(50, 50, 50, 0.55);  
+}
+.self-prod-list{
+    /*padding-top: 5em;*/
+    margin-top: 5em;
+    padding:  1em;
+    -webkit-box-shadow: 0px 3px 4px 0px rgba(50, 50, 50, 0.55);
+    -moz-box-shadow:    0px 3px 4px 0px rgba(50, 50, 50, 0.55);
+    box-shadow:         0px 3px 4px 0px rgba(50, 50, 50, 0.55);  
+}
+
+.self-type-caption{
+    position: absolute;
+    top: 1em;
+    left: 2em;
+    right: 2em;
+    text-align: center;
+    /*right: 5%;
+    bottom: 10px;
+    left: 5%;
+    z-index: 10;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: #fff;
+    text-align: center;    */
+}
+.self-type-caption-name{
+    font-weight: bold;
+    font-size : 1em;
+}
+.self-type-caption-description{
+    font-size : 0.8em;
+}
+
+.self-carousel-caption{
+    background-color: #dbe1f4AA;
+    border-radius: 0.5em;
+}
+.self-carousel-caption > a{
+    color: black;
+    text-decoration: none;
+}
+.carousel-indicators li{
+    height: 20px;
+    width: 20px;
+    margin: 5px;
+    bottom: -20px;
+    background-color: #dbe1f4AA;
+    border-radius: 10px;
+}
+
+.bodybackground{
+    background: url(../image/background.png) repeat-y #ece9f1;/*cfc8db*/
+    -moz-background-size: 100%; /* Firefox 3.6+ */
+    -webkit-background-size: 100%; /* Safari 3.1+ и Chrome 4.0+ */
+    -o-background-size: 100%; /* Opera 9.6+ */
+    background-size: 100%; /* Современные браузеры */  
+}
+
+/*https://css3gen.com/box-shadow/*/
+.prod-item{
+    padding: 0.2em;
+    background-color: #dbe1f4;
+    border: 0px;
+    margin: 0.5em;
+    border-radius: 0.2em;
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
+    -webkit-box-shadow: 0px 3px 4px 0px rgba(50, 50, 50, 0.55);
+    -moz-box-shadow:    0px 3px 4px 0px rgba(50, 50, 50, 0.55);
+    box-shadow:         0px 3px 4px 0px rgba(50, 50, 50, 0.55);    
+}
+.prod-item:hover{
+    background-color: #a7b4dd;
+    -webkit-box-shadow: 9px 8px 11px 0px rgba(50, 50, 50, 0.63);
+    -moz-box-shadow:    9px 8px 11px 0px rgba(50, 50, 50, 0.63);
+    box-shadow:         9px 8px 11px 0px rgba(50, 50, 50, 0.63);  
+}
+
+.prod-description{
+    padding: 0.5em;
+    background-color: #e9efff;
+    height: 60px;
+    overflow: hidden;
+    font-size: 1.4em;
+}
+
+.cursor-pointer{
+    cursor: pointer;
+}
+
+
+/* Для того чтобы эти два блока были одинаковой высоты, вписываем CSS */
+.row-flex, .row-flex > div[class*='col-'] { 
+ display: -webkit-box;
+ display: -moz-box;
+ display: -ms-flexbox;
+ display: -webkit-flex;
+ display: flex;
+ flex:1 1 auto;
+ padding: 0.3em;
+}
+
+.row-flex-wrap {
+ -webkit-flex-flow: row wrap;
+ align-content: flex-start;
+ flex:0;
+}
+
+.row-flex > div[class*='col-'] {
+     margin:-.2px; 
+}
+/* Для того */
+
+
+/* link animation https://codepen.io/jltk/pen/dMvGvG */
+a {
+	cursor: pointer;
+	text-decoration: none;
+}
+.self-link-animation > a {
+	position: relative;
+	&:before {
+		content: "";
+		position: absolute;
+		width: 100%;
+		height: 2px;
+		bottom: 0;
+		margin: -5px 0;
+		background-color: #f1f1f1;
+		visibility: hidden;
+		transform: scaleX(0);
+		transition: all 0.4s ease-in-out 0s;
+	}
+	&:hover:before {
+		visibility: visible;
+		transform: scaleX(1);
+	}
+}
+/* link */
+
+
+/* scale image http://beloweb.ru/novichkam/plavnoe-uvelichenie-izobrazheniya-pri-navedenii-na-chistom-css3.html*/
+
+
+/*sprite*/
+.spriteanimate{
+    /*background: red;*/
+    /*opacity: 0.5;*/
+    width: 100%;
+    position: relative;
+}
+.spriteanimate .backimage{
+    width: 100%;
+}
+.spriteanimate > .spriteimage{
+    display: none;
+}
+.spriteanimate > canvas{
+    /*background: blueviolet;*/
+    width: 100%;
+    position: absolute;
+    top:0px;
+    left: 0px;
+    opacity: 0;
+}
+/*-sprite*/
+
+
+/*login*/
+/*.form-signin {
+  width: 100%;
+  max-width: 600px;
+  padding: 15px;
+  margin: 0 auto;
+}*/
+/* -login*/
+
+
+/*EDIT TABLE*/
+.self-datatable-compact{
+    max-width: 500px;
+}
+.self-datatable TD{
+     padding: 0 !important;
+}
+.self-datatable TH{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+.self-input-data > input,
+.self-input-data > select,
+.self-input-data > textarea{
+    display: block !important;
+    border: 1px solid #EEE !important;
+    background: transparent !important;
+    padding: 0px !important;
+    margin: 0px !important;
+    width: 100% !important;
+}
+.self-datatable TD{
+    /*border: 1px solid #F00 !important;*/
+    padding: 0 !important;
+}
+.self-datatable TH{
+    /*border: 1px solid #F00 !important;*/
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+/* -EDIT TABLE*/
+
+
+/*navbar*/
+.navbar,.dropdown-menu{
+    background: #cfc8db; /* Old Browsers */
+    background: -webkit-linear-gradient(top,#cfc8db,#f1f1f1); /*Safari 5.1-6*/
+    background: -o-linear-gradient(top,#cfc8db,#f1f1f1); /*Opera 11.1-12*/
+    background: -moz-linear-gradient(top, #a79db9, #cfc8db); /*Fx 3.6-15*/
+    background: linear-gradient(to bottom, #a79db9, #cfc8db); /*Standard*/
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+/*-navbar*/
+
+.footer{
+    background: #cfc8db; /* Old Browsers */
+    background: -webkit-linear-gradient(top,#f1f1f1,#cfc8db); /*Safari 5.1-6*/
+    background: -o-linear-gradient(top,#f1f1f1,#cfc8db); /*Opera 11.1-12*/
+    background: -moz-linear-gradient(top, #f1f1f1,#cfc8db); /*Fx 3.6-15*/
+    background: linear-gradient(to bottom, #f1f1f1,#cfc8db); /*Standard*/
+}
+.footer-item{
+    padding: 0.5em;
+}

@@ -1,0 +1,545 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block body %}
+
+<!--ko if: page() == 1-->    
+    <header>
+        ProductForm
+    </header>
+    <table class="table table-hover self-datatable"><!--scrollable-->
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Описание</th>
+                <th>Url</th>
+                <th>Тип</th>
+                <th>Вес</th>
+                <th>Фото</th>
+                <th>Удалить</th>
+                <th>Открыть</th>
+            </tr>            
+        </thead>
+
+        <tbody data-bind="foreach: ProdArr">
+            <tr>
+                <td data-bind="text : ProdId" align="center"></td>
+                <td valign="top">
+                    <div class="self-input-data">
+                        <textarea rows=4 data-bind="textinput : ProdName"></textarea>
+                    </div>
+                </td>
+                <td style="flex: 25">
+                    <div class="self-input-data">
+                        <textarea rows=4 data-bind="textinput : ProdDescription"></textarea>
+                    </div>
+                </td>
+                <td style="flex: 20">
+                    <div class="self-input-data">
+                        <textarea rows=4 data-bind="textinput : ProdUrl"></textarea>
+                    </div>
+                </td>
+                <td style="flex: 15">
+                    <div class="self-input-data">
+                    <select 
+                        data-bind="options : $root.ProdTypeArr,
+                            optionsCaption: 'Выбрать тип',
+                            optionsText: 'TypeName',
+                            optionsValue: function(item) {return item.TypeId;},
+                            value: ProdTypeId
+                            "/> 
+                    </div>
+                </td>
+                <td width="200px">
+                    <table>
+                        <tr>
+                            <td width="110px">За кило(руб):</td>
+                            <td width="90px"><div class="self-input-data"><input data-bind="textinput : ProductPricePerKilogram"/></div></td>
+                        </tr>
+                        <tr>
+                            <td>Мин(кг):</td>
+                            <td><div class="self-input-data"><input data-bind="textinput : ProductMinWeight"/></div></td>
+                        </tr>
+                        <tr>
+                            <td>Макс(кг):</td>
+                            <td><div class="self-input-data"><input data-bind="textinput : ProductMaxWeight"/></div></td>
+                        </tr>
+                        <tr>
+                            <td>Шаг(кг):</td>
+                            <td><div class="self-input-data"><input data-bind="textinput : ProductStepWeight"/></div></td>
+                        </tr>
+                    </table>
+                </td>
+                <td data-bind="text : ImageCount" align="center"></td>
+                <td align="center">
+                    <div class="self-input-data">
+                        <input data-bind="checked : _delete, attr: {'id': 'check' + $index()}" type="checkbox"/>
+                        <label data-bind="attr: {'for': 'check' + $index()}" class="switch"></label>
+                    </div>
+                </td>
+                <td>
+                    <div class="self-input-data">
+                        <input type="button" id="openProdButton" value="открыть" data-bind='click: $root.Click_openProd.bind($data,$index())'/>
+                    </div>
+                </td>                
+            </tr>
+        </tbody>
+    </table> 
+
+    <footer>
+        
+        <div class="btn-group">
+            <input class="btn" type="button" id="addProdButton" value="Добавить" data-bind='click: Click_addProd'/>
+            <input class="btn" type="button" id="saveProdeButton" value="Сохранить" data-bind='click: Click_saveProd'/>
+            <input class="btn" type="button" id="uploadProdButton" value="Перегрузить" data-bind='click: Click_uploadProd'/>
+        </div>
+        
+    </footer>
+
+<!--/ko-->
+<!--ko if: page() == 2-->
+    <header>
+        <input type="button" id="backToListButton" value="Вернуться к списку" data-bind='click: Click_backToList'/>
+    </header>
+
+    <div class="container">
+    <!--div class="row">
+    <div class="col-lg-6"-->
+    <table data-bind="with: EditableProdItem" class="table self-datatable-compact">
+        <tr>
+            <td>Id</td> <td data-bind="text : ProdId"></td>
+        </tr><tr>
+            <td>Название</td> 
+            <td>
+                <div class="self-input-data">
+                    <input data-bind="textInput : ProdName"/>
+                </div>
+            </td>
+        </tr><tr>
+            <td>Описание</td> 
+            <td>
+                <div class="self-input-data">
+                    <textarea rows=15 data-bind="textinput : ProdDescription"></textarea>
+                </div>
+            </td>
+        </tr><tr>
+            <td>Url</td>
+            <td>
+                <div class="self-input-data">
+                    <input data-bind="textInput : ProdUrl"/>
+                </div>
+            </td>
+        </tr><tr>
+            <td>Тип</td> 
+            <td>
+                <div class="self-input-data">
+                    <input data-bind="textInput : ProdTypeId"/>
+                    <select 
+                        data-bind="options : $root.ProdTypeArr,
+                            optionsCaption: 'Выбрать тип',
+                            optionsText: 'TypeName',
+                            optionsValue: function(item) {return item.TypeId;},
+                            value: ProdTypeId
+                            "/> 
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>Удалить</td> 
+            <!--td><input data-bind="checked : _delete" type="checkbox"/></td-->
+            <td>
+                <div class="self-input-data">
+                    <input data-bind="checked : _delete" id="check_productdelete" type="checkbox"/>
+                    <label for="check_productdelete" class="switch"></label>                        
+                </div>     
+            </td> 
+        </tr>
+        <tr>
+            <td>Фото</td> 
+            <td>
+
+                <!--form id="deleteSelectImageForm" method="post" data-bind="submit: $root.doSubmitDeleteSelectImages"-->
+                <div style="background: #EEE;padding: 10px">
+                    <table>
+                        <tbody data-bind="foreach: $root.ImageArr_Ready">
+                            <tr>
+                                <td data-bind="text : ImageId"></td> 
+                                <td data-bind="text : ImageName"></td>
+                                <td data-bind="text : ImageDescription"></td>
+                                <!--td data-bind="text : PathSquareMini"></td-->
+                                <td><img data-bind="attr:{src: PathSquareMini}"/></td><!-- width="16px" height="16px" -->
+                                <td>
+                                    <div class="self-input-data"><!--padding-left:80%;-->
+                                        <input data-bind="checked : _delete, attr: {'id': 'check' + $index()}" type="checkbox"/>
+                                        <label data-bind="attr: {'for': 'check' + $index()}" class="switch"></label>
+                                    </div>                                
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>  
+                    <input type="button" value="Удалить выбранные изображения"  id="deleteSelectImageButton" data-bind='click: $root.doSubmitDeleteSelectImages'/>
+                <!--/form-->
+                </div>
+                </br>
+                <div style="background: #EEE;padding: 10px">
+                    <input type="button" id="addImageButton" value="Добавить ещё фото" data-bind='click: $root.Click_addImage'/>
+                    <form id="uploadImageForm" method="post" enctype="multipart/form-data" data-bind="submit: $root.doSubmitSendImages">
+                        <div data-bind="with: $root.EditableProdItem">
+                            <input type="hidden" name="prodid" data-bind="textInput : ProdId"/>
+                        </div>
+                        <input type="hidden" name="imagecount" data-bind='value: $root.NewImageCount'/>
+                        <table>
+                            <tbody data-bind="foreach: $root.ImageArr_New">
+                                <tr>
+                                    <td>
+                                        <input data-bind="attr: {name : ImageName,value : ImageName}" type="file" id="input-fotoproduct-add"/>
+                                        <label for="input-fotoproduct-add" class="button"></label>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <input type="submit" value="Отравить"  id="sendImageButton"/>
+                    </form>  
+                </div>
+                
+            </td>
+        </tr>
+    </table>
+    <!--/div>
+    </div-->
+    </div>
+    
+    <!--input type="button" id="backToListButton" value="Вернуться к списку" data-bind='click: Click_backToList'/-->
+    <!--div data-bind="html: ( console.log(ko.toJSON($root.ImageArr_Ready)), $root.ImageArr_Ready )"></div-->
+    
+    <!--div data-bind="html: ko.toJSON($root.ImageArr_Ready)"></div-->
+    
+<!--/ko-->
+
+{% endblock %}
+
+{% block javascripts %}
+    
+    <!--script type="text/javascript" src="https://cdn.datatables.net/v/se/dt-1.10.16/datatables.min.js"></script-->
+    
+    <!--script src="/js/semantic.editableRecord.js"></script-->
+    
+    <script>
+
+    /*function onScroll() {
+            window.scrollY >= origOffsetY != headerIsFixed && (
+                    headerIsFixed = !headerIsFixed,
+                    header.classList.toggle("self-sticky-header", headerIsFixed)
+            );
+    }
+    var header = document.querySelector(".self-sticky"),
+            origOffsetY = header.offsetTop,
+            headerIsFixed = !1;
+    document.addEventListener("scroll", onScroll);*/
+
+    /*$( document ).ready(function() {
+        $("#product-data-table").editableRecord();
+    });    */
+    
+    //$("product-data-table").da
+        
+    /*
+    https://www.w3schools.com/php/php_file_upload.asp
+    https://developer.mozilla.org/ru/docs/Web/HTML/Element/Input/image
+    http://phppot.com/jquery/jquery-ajax-image-upload/
+    http://phppot.com/jquery/jquery-ajax-image-upload/
+    https://stackoverflow.com/questions/19447435/ajax-upload-image
+    
+    http://blog.craigtp.co.uk/post/knockoutjs-binding-on-select-elements-in-a-foreach-loop
+    http://www.softfinity.com/blog/using-ajax-with-knockout-js-and-asp-net-mvc-4-to-load-select-drop-down-options/
+    */
+   
+    /*$( window ).resize(function() {
+        ResizeTableByContex("self-datatable-1");
+    });
+    $( document ).ready(function() {
+        ResizeTableByContex("self-datatable-1");
+    });*/
+    
+    function ProdItem(data){
+        var self = this;
+        self.ProdId = ko.observable(data.prodid);
+        self.ProdName = ko.observable(data.prodname?data.prodname:"");
+        self.ProdDescription = ko.observable(data.proddescription?data.proddescription:"");
+        self.ProdUrl = ko.observable(data.produrl?data.produrl:"");
+        self.ProdTypeId = ko.observable(data.prodtypeid?data.prodtypeid:0);
+        self._delete = ko.observable(data._delete?data._delete:false);
+        self.ImageCount = data.imagecount?data.imagecount:0;
+        self.ProductPricePerKilogram = ko.observable(data.prodPricePerKilogram?data.prodPricePerKilogram:0);
+        self.ProductMinWeight = ko.observable(data.prodMinWeight?data.prodMinWeight:0);
+        self.ProductMaxWeight = ko.observable(data.prodMaxWeight?data.prodMaxWeight:0);
+        self.ProductStepWeight = ko.observable(data.prodStepWeight?data.prodStepWeight:0);
+    }
+    function ProdTypeItem (data){
+        var self = this;
+        self.TypeId = data.typeid;
+        self.TypeName = data.typename?data.typename:"";
+    };
+    function ProdImageItem(data){
+        var self = this;
+        self.ImageId = data.imageid;
+        self.ImageName = ko.observable(data.imagename?data.imagename:"");
+        self.ImageDescription = ko.observable(data.description?data.description:"");
+        self._delete = ko.observable(data._delete?data._delete:false);
+        
+        self.PathSquareMini = ko.computed(  
+                    function(){return '/productimage/square-mini/'+self.ImageName();},
+                    this
+                );
+    }
+    function ProdLoadImageItem(data){
+        var self = this;
+        self.ImageName = ko.observable(data.imagename?data.imagename:"");
+    }    
+    
+    var ProductFormViewModel = function(){
+            var self =this;
+            self.ProdArr = ko.observableArray();
+            self.ProdTypeArr = ko.observableArray();
+            
+            self.EditableProdItem = ko.observable();
+            self.EditableArrayPosition=0;
+            
+            self.pageTopOffset=0;
+            
+            self.page = ko.observable(1);
+            self.Click_backToList = function(){
+                self.page(1);
+                //ResizeTableByContex("self-datatable-1");
+                $(document).scrollTop(self.pageTopOffset);
+            };
+            
+            self.Click_openProd = function(arrnumber){
+                //alert(arrnumber);
+                self.pageTopOffset=window.pageYOffset;
+                self.EditableProdItem( self.ProdArr()[arrnumber] );
+                self.EditableArrayPosition=arrnumber;
+                self.ImageViewUpdate();
+                self.page(2);
+            };
+            
+            self.Click_addProd = function (){
+                self.ProdArr.push(
+                    new ProdItem({
+                        prodid:0
+                    })
+                );
+            };
+            
+            /*загрузка списка */
+            self.LoadUpdate = function(){
+                $.post("admin_producttypeload",{})
+                 .done(
+                    function(data) {
+                        ProdTypeArrUpdate(data);
+                        ////
+                        $.post("admin_productload",{})
+                         .done(
+                            function(data) {
+                                //console.log(data);
+                                ProdArrUpdate(data);
+                                //ResizeTableByContex("self-datatable-1");
+                            }
+                         );
+                    }
+                 ); 
+            };
+            
+            self.Click_saveProd = function(){
+                //alert(ko.toJSON(self.ProdArr));
+                $.post("admin_productsave",{datajson: ko.toJSON(self.ProdArr)})
+                 .done(
+                    function(data) {
+                        ProdArrUpdate(data);
+                    }
+                 );
+            };
+            
+            function ProdTypeArrUpdate(data){
+                json=JSON.parse(data);
+                self.ProdTypeArr.removeAll();
+                //self.ProdTypeArr.push( new ProdTypeItem({typeid:0,typename:""}) );
+                for(var i=0;i<json.length;i++)
+                self.ProdTypeArr.push(
+                        new ProdTypeItem({
+                            typeid:json[i].p_Id, typename:json[i].p_Name
+                        }
+                    ));
+            }
+            function ProdArrUpdate(data){
+                json=JSON.parse(data);
+                self.ProdArr.removeAll();
+                for(var i=0;i<json.length;i++)
+                self.ProdArr.push(
+                        new ProdItem({
+                            prodid:json[i].p_Id, 
+                            prodname:json[i].p_Name, 
+                            proddescription:json[i].p_Description,
+                            produrl:json[i].p_Url,
+                            prodtypeid:json[i].tk_Id,
+                            imagecount:json[i].imagecount,
+                            prodPricePerKilogram:json[i].p_ProductPricePerKilogram,
+                            prodMinWeight:json[i].p_ProductMinWeight,
+                            prodMaxWeight:json[i].p_ProductMaxWeight,
+                            prodStepWeight:json[i].p_ProductStepWeight
+                        }
+                    ));                
+            }
+
+            self.Click_uploadProd = function(){
+                self.LoadUpdate();
+            };
+            
+            
+            //** FOTOS **//
+            self.NewImageCount = ko.observable(0);
+            self.ImageArr_Ready = ko.observableArray();//Уже загруженные
+            self.ImageArr_New = ko.observableArray();
+            
+            //обновление загруженных фото, инициализация загрузки
+            self.ImageViewUpdate = function(){
+                self.ImageArr_New.removeAll();
+                self.NewImageCount(0);
+                ImageArr_ReadyUpdate();
+            };
+            self.Click_addImage = function(){
+                self.NewImageCount( self.NewImageCount()+1 );
+                self.ImageArr_New.push(
+                            new ProdLoadImageItem({
+                                imagename: "image"+self.NewImageCount()
+                            }
+                        ));
+            };
+            
+            //удаление загруженных изображений
+            self.doSubmitDeleteSelectImages = function(){
+                //ImageArr_Ready - ARRAY OF ->> ProdImageItem
+                var ImageIdsDelete = [];
+                for (var i = 0; i < self.ImageArr_Ready().length; i++) {
+                    if (self.ImageArr_Ready()[i]._delete()){
+                        ImageIdsDelete.push( self.ImageArr_Ready()[i].ImageId );
+                    }
+                }
+                $.post("admin_deleteproductimagelist",{datajson: ko.toJSON(ImageIdsDelete)})
+                .done(
+                    function(data) {
+                        ImageArr_ReadyUpdate();
+                        //console.log(data); <--retun message
+                    }
+                );
+            };
+            
+            //отправка изображений
+            self.doSubmitSendImages = function(formElement){
+                if( formElement.id==='uploadImageForm' ){
+                    $.ajax({
+                        url: "admin_productimagesave",
+                        method: "post",
+                        data: new FormData( formElement ),
+                        //beforeSend: function(){alert("befor");},
+                        contentType: false,
+                        processData: false,
+                        success: function(data){
+                            //alert("success data="+data);
+                            self.ImageArr_New.removeAll();
+                            self.NewImageCount(0);
+                            json=JSON.parse(data);
+                            //alert( self.ProdArr()[self.EditableArrayPosition].ProdId() );
+                            //alert( json[0].p_Id );
+                            self.ProdArr()[self.EditableArrayPosition].ProdId( json[0].p_Id );
+                            ImageArr_ReadyUpdate();
+                        }
+                    });
+                }
+            };
+            /*update in editable item*/
+            function ImageArr_ReadyUpdate(){
+                //alert('ImageArr_ReadyUpdate');
+                $prodid = self.EditableProdItem().ProdId();
+                //alert($prodid);
+                $.post("productimagebyid",{prodid:$prodid})
+                 .done(
+                    function(data) {
+                        //alert(data);
+                        json=JSON.parse(data);
+                        self.ImageArr_Ready.removeAll();
+                        for(var i=0;i<json.length;i++)
+                            self.ImageArr_Ready.push(
+                                new ProdImageItem({
+                                    imageid:json[i].p_Id, 
+                                    imagename:json[i].p_Name, 
+                                    imagedescription:json[i].p_Description
+                                }
+                            ));
+                        //console.log("imgcount="+self.ProdArr()[self.EditableArrayPosition].ImageCount);
+                        //console.log("length="+self.ImageArr_Ready().length);
+                        //UPDATE imageCount in product
+                        self.ProdArr()[self.EditableArrayPosition].ImageCount = self.ImageArr_Ready().length;
+                    }
+                 );                
+            }            
+            
+        };
+        var _ProductFormViewModel = new ProductFormViewModel();
+        ko.applyBindings(_ProductFormViewModel);
+        _ProductFormViewModel.LoadUpdate();
+        
+        
+        
+//************************************************************************************
+
+    /*function ImageItem(data) {
+        var self = this;
+        self.imagename = ko.observable(data.name);
+    }
+    
+    var ProductFormViewModel = function(){
+        
+        var self = this;
+        
+        self.ImageCount = ko.observable(0);
+        self.ImageArr = ko.observableArray();
+        
+        self.Click_addImageField = function(){
+          self.ImageCount(self.ImageCount()+1);
+          self.ImageArr.push( new ImageItem(  {name: "image"+self.ImageCount()} ) );
+        };
+        
+        self.GetInfo = function (ImageArrItem) {
+            //alert(ImageArrItem.imagename());
+            //console.log(ImageArrItem.imagename());
+            //console.log(self.ImageArr()[0].imagename());
+            //console.log(ko.toJSON(self.ImageArr));
+        };
+    };
+    ko.applyBindings(new ProductFormViewModel());*/
+        
+        
+        
+    /*$(document).ready(function (e){   
+        $("#uploadForm").on('submit',(function(e){
+            e.preventDefault();
+            alert("test2");
+            $.ajax({
+                        url: "admin_productsave",
+                        method: "post",
+                        data: new FormData(this),
+                        beforeSend: function(){alert("befor");},
+                        contentType: false,
+                        processData: false,
+                        success: function(data){
+                            alert("success data="+data);
+                        }
+                    })
+        }))
+    })*/
+    </script>
+{% endblock %}
